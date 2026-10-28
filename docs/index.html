@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotonPath — User Guide & Documentation</title>
+  <style>
+    :root {
+      --bg-space: #050D1A;
+      --bg-panel: #0A1628;
+      --bg-card: #0F1F38;
+      --bg-card-hover: #162B4E;
+      --border-color: #1A3052;
+      --border-focus: #00E5FF;
+      --text-main: #E0E8F5;
+      --text-muted: #8A9BB5;
+      --text-dim: #546B8A;
+      --accent-primary: #00E5FF;
+      --accent-ok: #00FFB2;
+      --accent-warn: #FFAB00;
+      --accent-error: #FF4444;
+      --accent-tertiary: #7B61FF;
+      --font-mono: "JetBrains Mono", "SF Mono", "Consolas", "Courier New", monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-space);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header & Navigation Bar */
+    header {
+      background-color: var(--bg-panel);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #00E5FF 0%, #7B61FF 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #050D1A;
+      font-size: 18px;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+      letter-spacing: 0.5px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .article-link {
+      background-color: rgba(123, 97, 255, 0.15);
+      border: 1px solid var(--accent-tertiary);
+      color: #B5A4FF;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .article-link:hover {
+      background-color: var(--accent-tertiary);
+      color: #FFFFFF;
+    }
+
+    /* Language Switch Button */
+    .lang-switch-btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 3px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lang-opt {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .lang-opt.active {
+      background-color: var(--accent-primary);
+      color: var(--bg-space);
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+    }
+
+    /* Layout */
+    .container {
+      display: flex;
+      flex: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Sidebar */
+    aside {
+      width: 280px;
+      background-color: var(--bg-panel);
+      border-right: 1px solid var(--border-color);
+      padding: 24px 16px;
+      position: sticky;
+      top: 61px;
+      height: calc(100vh - 61px);
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-group-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+      margin-top: 16px;
+      padding-left: 8px;
+    }
+
+    .sidebar-group-title:first-child {
+      margin-top: 0;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .sidebar-menu a:hover {
+      background-color: var(--bg-card);
+      color: var(--accent-primary);
+    }
+
+    .sidebar-menu a.active {
+      background-color: rgba(0, 229, 255, 0.1);
+      color: var(--accent-primary);
+      font-weight: 600;
+      border-left: 3px solid var(--accent-primary);
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      padding: 36px 48px;
+      max-width: 1040px;
+    }
+
+    section {
+      margin-bottom: 56px;
+      scroll-margin-top: 80px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-top: 36px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .lead {
+      font-size: 17px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* Callout & Cards */
+    .callout {
+      background-color: var(--bg-card);
+      border-left: 4px solid var(--accent-primary);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 6px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .callout.warn {
+      border-left-color: var(--accent-warn);
+    }
+    .callout.warn .callout-title {
+      color: var(--accent-warn);
+    }
+
+    .callout.ok {
+      border-left-color: var(--accent-ok);
+    }
+    .callout.ok .callout-title {
+      color: var(--accent-ok);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: var(--bg-panel);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: var(--bg-card);
+      color: var(--accent-primary);
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Badges & Chips */
+    .chip {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+
+    .chip-primary { background: rgba(0, 229, 255, 0.15); color: var(--accent-primary); border: 1px solid var(--accent-primary); }
+    .chip-ok { background: rgba(0, 255, 178, 0.15); color: var(--accent-ok); border: 1px solid var(--accent-ok); }
+    .chip-warn { background: rgba(255, 171, 0, 0.15); color: var(--accent-warn); border: 1px solid var(--accent-warn); }
+    .chip-error { background: rgba(255, 68, 68, 0.15); color: var(--accent-error); border: 1px solid var(--accent-error); }
+    .chip-tertiary { background: rgba(123, 97, 255, 0.15); color: var(--accent-tertiary); border: 1px solid var(--accent-tertiary); }
+
+    /* Code & Formulas */
+    pre, code {
+      font-family: var(--font-mono);
+    }
+
+    code {
+      background-color: var(--bg-card);
+      color: #79C0FF;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13.5px;
+    }
+
+    pre {
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: #E0E8F5;
+      font-size: 13px;
+    }
+
+    .formula-box {
+      background-color: var(--bg-card);
+      border-left: 3px solid var(--accent-tertiary);
+      padding: 12px 18px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: #B5A4FF;
+      margin: 12px 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    img.screenshot {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      margin: 16px 0 24px 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Paper & Academic Article */
+    .journal-meta {
+      border-bottom: 2px solid var(--accent-primary);
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .article-title {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.3;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+
+    .article-authors {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-primary);
+      margin-bottom: 4px;
+    }
+
+    .article-affiliation {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+
+    .abstract-box {
+      background-color: rgba(10, 22, 40, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    .abstract-title {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-primary);
+      margin-bottom: 10px;
+    }
+
+    .abstract-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-main);
+      text-align: justify;
+    }
+
+    .keywords {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 12px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .keywords strong { color: var(--text-muted); }
+
+    .equation {
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--accent-primary);
+      padding: 12px 18px;
+      margin: 16px 0;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #9ECBFF;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .eq-num { color: var(--text-dim); font-size: 12px; }
+
+    .reference-list {
+      list-style: none;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .reference-list li {
+      margin-bottom: 10px;
+      padding-left: 24px;
+      text-indent: -24px;
+    }
+
+    /* Bilingual display rules */
+    html[lang="en"] .lang-fr { display: none !important; }
+    html[lang="fr"] .lang-en { display: none !important; }
+
+    footer {
+      background-color: var(--bg-panel);
+      border-top: 1px solid var(--border-color);
+      padding: 24px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 13px;
+      margin-top: auto;
+    }
+
+    @media (max-width: 900px) {
+      .container { flex-direction: column; }
+      aside { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border-color); }
+      main { padding: 24px 20px; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <a href="#" class="brand">
+      <div class="brand-logo">γ</div>
+      <div>
+        <div class="brand-title">PhotonPath</div>
+        <div class="brand-subtitle lang-en">From Photon to Pixel · Modeling & Dimensioning</div>
+        <div class="brand-subtitle lang-fr">Du Photon au Pixel · Modélisation & Dimensionnement</div>
+      </div>
+    </a>
+    <div class="nav-actions">
+      <a href="#article" class="article-link">
+        <span>📄</span>
+        <span class="lang-en">Scientific Paper</span>
+        <span class="lang-fr">Article Scientifique</span>
+      </a>
+      <div class="lang-switch-btn" id="langToggle" title="Switch language / Changer de langue">
+        <span class="lang-opt active" id="btnEn">EN</span>
+        <span class="lang-opt" id="btnFr">FR</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside>
+      <div class="sidebar-group-title lang-en">General</div>
+      <div class="sidebar-group-title lang-fr">Général</div>
+      <ul class="sidebar-menu">
+        <li><a href="#overview" class="active lang-en">Overview & Mission</a><a href="#overview" class="active lang-fr">Présentation & Mission</a></li>
+        <li><a href="#install" class="lang-en">Installation (Mac, Win, Linux)</a><a href="#install" class="lang-fr">Installation (Mac, Win, Linux)</a></li>
+      </ul>
+
+      <div class="sidebar-group-title lang-en">Screen Guides</div>
+      <div class="sidebar-group-title lang-fr">Guides des Écrans</div>
+      <ul class="sidebar-menu">
+        <li><a href="#calculator" class="lang-en">1 · Optical Calculator</a><a href="#calculator" class="lang-fr">1 · Calculateur Optique</a></li>
+        <li><a href="#noise" class="lang-en">2 · Noise Budget</a><a href="#noise" class="lang-fr">2 · Budget de Bruit</a></li>
+        <li><a href="#calibration" class="lang-en">3 · Calibration Pipeline</a><a href="#calibration" class="lang-fr">3 · Pipeline de Calibration</a></li>
+      </ul>
+
+      <div class="sidebar-group-title lang-en">Tutorial & Practice</div>
+      <div class="sidebar-group-title lang-fr">Tutoriel & Pratique</div>
+      <ul class="sidebar-menu">
+        <li><a href="#tutorial" class="lang-en">End-to-End Tutorial</a><a href="#tutorial" class="lang-fr">Tutoriel de Bout en Bout</a></li>
+        <li><a href="#verdicts" class="lang-en">Verdicts & Decision Aid</a><a href="#verdicts" class="lang-fr">Verdicts & Aide à la Décision</a></li>
+        <li><a href="#sensor" class="lang-en">Measuring Sensor (D, R)</a><a href="#sensor" class="lang-fr">Mesurer son Capteur (D, R)</a></li>
+      </ul>
+
+      <div class="sidebar-group-title lang-en">Physics & Core Rules</div>
+      <div class="sidebar-group-title lang-fr">Physique & Principes</div>
+      <ul class="sidebar-menu">
+        <li><a href="#physics" class="lang-en">Physics Engine Reference</a><a href="#physics" class="lang-fr">Moteur Physique & Formules</a></li>
+        <li><a href="#article" class="lang-en">Scientific Paper (PASP/A&A)</a><a href="#article" class="lang-fr">Article Scientifique (PASP/A&A)</a></li>
+        <li><a href="#faq" class="lang-en">FAQ & Scientific Notes</a><a href="#faq" class="lang-fr">FAQ & Notes Scientifiques</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Documentation Body -->
+    <main>
+
+      <!-- Section: Overview -->
+      <section id="overview">
+        <h1 class="lang-en">PhotonPath — System Documentation</h1>
+        <h1 class="lang-fr">PhotonPath — Documentation du Système</h1>
+        
+        <p class="lead lang-en">
+          PhotonPath is a desktop modeling and dimensioning tool for the optical-to-detector chain in observational astronomy — "from photon to pixel".
+        </p>
+        <p class="lead lang-fr">
+          PhotonPath est un outil de bureau de modélisation et de dimensionnement de la chaîne optique-détection en astronomie observationnelle — « du photon au pixel ».
+        </p>
+
+        <div class="callout ok">
+          <div class="callout-title lang-en">Golden Principle: 100% Offline & Open Science</div>
+          <div class="callout-title lang-fr">Règle d'or : 100 % Hors-ligne & Science Ouverte</div>
+          <p class="lang-en" style="margin:0;">
+            PhotonPath operates completely offline without internet connection, collects zero user data, executes with strict SI units, and contains no remote dependencies.
+          </p>
+          <p class="lang-fr" style="margin:0;">
+            PhotonPath fonctionne intégralement hors-ligne sans connexion internet, ne collecte aucune donnée utilisateur, opère en unités SI strictes et ne contient aucune dépendance distante.
+          </p>
+        </div>
+
+        <h3 class="lang-en">Five Key Questions Answered Before Observing</h3>
+        <h3 class="lang-fr">Cinq Questions Clés Résolues Avant la Nuit</h3>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title lang-en">1. Sampling Quality</div>
+            <div class="card-title lang-fr">1. Échantillonnage Spatial</div>
+            <p class="lang-en">Does your sensor match the instrument's focal plane under diffraction and seeing limits?</p>
+            <p class="lang-fr">Le capteur est-il correctement adapté au plan focal sous les limites de diffraction et de seeing ?</p>
+          </div>
+          <div class="card">
+            <div class="card-title lang-en">2. Signal-to-Noise Ratio</div>
+            <div class="card-title lang-fr">2. Rapport Signal/Bruit</div>
+            <p class="lang-en">What SNR will be reached for a given star magnitude or surface brightness in total exposure time?</p>
+            <p class="lang-fr">Quel S/B obtiendrez-vous pour une magnitude ou brillance de surface donnée en un temps total donné ?</p>
+          </div>
+          <div class="card">
+            <div class="card-title lang-en">3. Dominant Noise Limiter</div>
+            <div class="card-title lang-fr">3. Régime de Bruit Limitant</div>
+            <p class="lang-en">Which physical term dominates variance: shot noise, sky background, dark current, read noise, or scintillation?</p>
+            <p class="lang-fr">Quel terme physique domine : grenaille de la cible, fond de ciel, courant d'obscurité, lecture ou scintillation ?</p>
+          </div>
+          <div class="card">
+            <div class="card-title lang-en">4. Calibration Frame Depth</div>
+            <div class="card-title lang-fr">4. Nombre de Poses de Calibration</div>
+            <p class="lang-en">How many bias, dark, and flat frames are mathematically required to prevent master noise from capping your stack?</p>
+            <p class="lang-fr">Combien de poses de bias, dark et flat sont requises pour empêcher le bruit des masters de plafonner votre empilement ?</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Installation & Launch -->
+      <section id="install">
+        <h2 class="lang-en">Installation & Quick Start Guides</h2>
+        <h2 class="lang-fr">Guides d'Installation & Prise en Main</h2>
+
+        <p class="lang-en">
+          PhotonPath is distributed as standalone native packages for macOS, Windows, and Linux, as well as a universal pure-Python wheel. 
+          It operates <strong>100% offline</strong> with zero network dependencies and zero telemetry.
+        </p>
+        <p class="lang-fr">
+          PhotonPath est distribué sous forme de paquets autonomes natifs pour macOS, Windows et Linux, ainsi qu'en wheel universelle pure-Python. 
+          Il fonctionne <strong>100 % hors-ligne</strong>, sans dépendance réseau et sans aucune télémétrie.
+        </p>
+
+        <!-- OS Package Cards Grid -->
+        <div class="grid-3" style="margin-top: 20px;">
+          <!-- macOS Card -->
+          <div class="card">
+            <div class="card-title"><span class="chip chip-primary">macOS</span> Application Bundle</div>
+            <p class="lang-en">For macOS 13+ (Apple Silicon & Intel x86_64). Self-contained <code>.app</code> bundle.</p>
+            <p class="lang-fr">Pour macOS 13+ (Apple Silicon et Intel x86_64). Paquet autonome <code>.app</code>.</p>
+            
+            <h4 class="lang-en" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">1. Installation</h4>
+            <h4 class="lang-fr" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">1. Installation</h4>
+            <p class="lang-en">Extract <code>PhotonPath-macOS.zip</code> and drag <code class="chip chip-primary">PhotonPath.app</code> to your <code>/Applications</code> folder.</p>
+            <p class="lang-fr">Décompressez <code>PhotonPath-macOS.zip</code> et glissez <code class="chip chip-primary">PhotonPath.app</code> dans votre dossier <code>/Applications</code>.</p>
+
+            <h4 class="lang-en" style="color:var(--accent-warn);margin:10px 0 4px 0;font-size:13px;">2. First Launch (Gatekeeper)</h4>
+            <h4 class="lang-fr" style="color:var(--accent-warn);margin:10px 0 4px 0;font-size:13px;">2. Premier lancement (Gatekeeper)</h4>
+            <p class="lang-en">As free open-source software, macOS will check security on first run:</p>
+            <p class="lang-fr">En tant que logiciel libre gratuit, macOS vérifie la sécurité au premier lancement :</p>
+            <ul style="font-size:12.5px;padding-left:18px;margin-bottom:8px;">
+              <li class="lang-en"><strong>Right-click</strong> (or Control-click) <code>PhotonPath.app</code> → select <strong>Open</strong> → click <strong>Open</strong>.</li>
+              <li class="lang-fr"><strong>Clic droit</strong> sur <code>PhotonPath.app</code> → choisir <strong>Ouvrir</strong> → confirmer <strong>Ouvrir</strong>.</li>
+              <li class="lang-en">Or go to <em>System Settings → Privacy & Security</em> and click <em>Open Anyway</em>.</li>
+              <li class="lang-fr">Ou allez dans <em>Réglages Système → Confidentialité et sécurité</em> et cliquez sur <em>Ouvrir quand même</em>.</li>
+            </ul>
+            <p class="lang-en" style="font-size:12px;color:var(--text-muted);">Subsequent launches open immediately with a standard double-click.</p>
+            <p class="lang-fr" style="font-size:12px;color:var(--text-muted);">Les lancements suivants s'ouvrent directement par un simple double-clic.</p>
+          </div>
+
+          <!-- Windows Card -->
+          <div class="card">
+            <div class="card-title"><span class="chip chip-ok">Windows</span> Portable Edition</div>
+            <p class="lang-en">For Windows 10 & 11 (64-bit). Standalone portable folder, zero installation required.</p>
+            <p class="lang-fr">Pour Windows 10 et 11 (64 bits). Dossier portable autonome, sans inscription dans le registre.</p>
+
+            <h4 class="lang-en" style="color:var(--accent-ok);margin:10px 0 4px 0;font-size:13px;">1. Extraction</h4>
+            <h4 class="lang-fr" style="color:var(--accent-ok);margin:10px 0 4px 0;font-size:13px;">1. Décompression</h4>
+            <p class="lang-en">Extract <code>PhotonPath-Windows.zip</code> to your chosen folder (e.g. <code>C:\Astronomy\PhotonPath</code>).</p>
+            <p class="lang-fr">Extrayez <code>PhotonPath-Windows.zip</code> dans le dossier de votre choix (ex. <code>C:\Astronomie\PhotonPath</code>).</p>
+
+            <h4 class="lang-en" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">2. Launching</h4>
+            <h4 class="lang-fr" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">2. Lancement</h4>
+            <p class="lang-en">Double-click <code class="chip chip-ok">lancer_photonpath.bat</code> (or <code>PhotonPath\PhotonPath.exe</code>).</p>
+            <p class="lang-fr">Double-cliquez sur <code class="chip chip-ok">lancer_photonpath.bat</code> (ou <code>PhotonPath\PhotonPath.exe</code>).</p>
+
+            <h4 class="lang-en" style="color:var(--accent-warn);margin:10px 0 4px 0;font-size:13px;">3. Windows SmartScreen</h4>
+            <h4 class="lang-fr" style="color:var(--accent-warn);margin:10px 0 4px 0;font-size:13px;">3. Windows SmartScreen</h4>
+            <p class="lang-en" style="font-size:12.5px;">If a blue SmartScreen banner appears: click <strong>More info</strong> → <strong>Run anyway</strong>.</p>
+            <p class="lang-fr" style="font-size:12.5px;">Si le bandeau bleu SmartScreen s'affiche : cliquez sur <strong>Informations complémentaires</strong> → <strong>Exécuter quand même</strong>.</p>
+          </div>
+
+          <!-- Linux Card -->
+          <div class="card">
+            <div class="card-title"><span class="chip chip-tertiary">Linux</span> Native Binary</div>
+            <p class="lang-en">For Ubuntu, Debian, Fedora, Arch Linux, etc. Native glibc/x86_64 binary.</p>
+            <p class="lang-fr">Pour Ubuntu, Debian, Fedora, Arch Linux, etc. Binaire natif glibc/x86_64.</p>
+
+            <h4 class="lang-en" style="color:var(--accent-tertiary);margin:10px 0 4px 0;font-size:13px;">1. Permissions</h4>
+            <h4 class="lang-fr" style="color:var(--accent-tertiary);margin:10px 0 4px 0;font-size:13px;">1. Permissions</h4>
+            <p class="lang-en">Extract <code>PhotonPath-Linux.zip</code> and allow execution:</p>
+            <p class="lang-fr">Extrayez <code>PhotonPath-Linux.zip</code> et accordez le droit d'exécution :</p>
+            <pre style="margin:6px 0;padding:8px;"><code>chmod +x lancer_photonpath.sh</code></pre>
+
+            <h4 class="lang-en" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">2. Launching</h4>
+            <h4 class="lang-fr" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">2. Lancement</h4>
+            <p class="lang-en">Execute <code class="chip chip-tertiary">./lancer_photonpath.sh</code> from the terminal or your desktop file manager.</p>
+            <p class="lang-fr">Exécutez <code class="chip chip-tertiary">./lancer_photonpath.sh</code> depuis le terminal ou votre gestionnaire de fichiers.</p>
+
+            <h4 class="lang-en" style="color:var(--text-muted);margin:10px 0 4px 0;font-size:13px;">System Libraries</h4>
+            <h4 class="lang-fr" style="color:var(--text-muted);margin:10px 0 4px 0;font-size:13px;">Bibliothèques Système</h4>
+            <p class="lang-en" style="font-size:12px;color:var(--text-dim);">Requires standard Qt/X11 libraries: <code>libxcb</code>, <code>libxkbcommon</code>, <code>libgl1</code>.</p>
+            <p class="lang-fr" style="font-size:12px;color:var(--text-dim);">Nécessite les bibliothèques Qt/X11 standard : <code>libxcb</code>, <code>libxkbcommon</code>, <code>libgl1</code>.</p>
+          </div>
+        </div>
+
+        <!-- Universal Python & Options -->
+        <div class="card" style="margin-top: 20px;">
+          <div class="card-title"><span class="chip chip-primary">Universal</span> Python 3.14 Wheel & CLI Options</div>
+          <p class="lang-en">
+            PhotonPath is also available as a pure Python wheel (<code>photonpath-0.1.0-py3-none-any.whl</code>). 
+            Install and run on any operating system supporting Python ≥ 3.14:
+          </p>
+          <p class="lang-fr">
+            PhotonPath est également disponible sous forme de wheel pure Python (<code>photonpath-0.1.0-py3-none-any.whl</code>). 
+            Installez et exécutez sur tout système supportant Python ≥ 3.14 :
+          </p>
+          <pre><code># Install standalone wheel with GUI dependencies
+pip install photonpath-0.1.0-py3-none-any.whl[gui]
+
+# Or install in isolated virtual environment with uv:
+uv venv --python 3.14 .venv
+uv pip install ".[gui]"
+
+# Launch with English interface (default):
+photonpath
+
+# Launch with French interface:
+photonpath --lang fr</code></pre>
+        </div>
+      </section>
+
+      <!-- Section: Screen 1 - Calculator -->
+      <section id="calculator">
+        <h2 class="lang-en">Screen 1 · Optical Calculator</h2>
+        <h2 class="lang-fr">Écran 1 · Calculateur Optique</h2>
+
+        <img src="images/calculator.png" alt="Screen 1 Calculator" class="screenshot">
+
+        <p class="lang-en">
+          The Calculator models the geometric and wave optics of your setup and computes the dual spatial sampling verdicts.
+        </p>
+        <p class="lang-fr">
+          Le Calculateur modélise l'optique géométrique et ondulatoire de votre instrument et calcule le double verdict d'échantillonnage spatial.
+        </p>
+
+        <h3 class="lang-en">The Dual Sampling Verdict Explained</h3>
+        <h3 class="lang-fr">Le Double Verdict d'Échantillonnage Expliqué</h3>
+        <p class="lang-en">
+          Unlike ordinary calculators that provide only one sampling value, PhotonPath reports two independent verdicts:
+        </p>
+        <p class="lang-fr">
+          Contrairement aux calculateurs ordinaires qui ne fournissent qu'une seule valeur, PhotonPath rapporte deux verdicts indépendants :
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title lang-en"><span class="chip chip-primary">Diffraction</span> Nyquist Cutoff</div>
+            <div class="card-title lang-fr"><span class="chip chip-primary">Diffraction</span> Coupure de Nyquist</div>
+            <div class="formula-box">f_c = D / λ &nbsp;·&nbsp; Δθ_c = λ / (2D)</div>
+            <p class="lang-en">Ideal diffraction regime in space or with perfect Adaptive Optics. Compares pixel scale against λ/(2D). Varies strictly with aperture and wavelength.</p>
+            <p class="lang-fr">Régime de diffraction idéal dans l'espace ou sous optique adaptative parfaite. Compare la taille du pixel à λ/(2D). Varie strictement avec l'ouverture et la longueur d'onde.</p>
+          </div>
+          <div class="card">
+            <div class="card-title lang-en"><span class="chip chip-ok">Realized</span> Atmospheric Seeing</div>
+            <div class="card-title lang-fr"><span class="chip chip-ok">Réalisé</span> Turbulence Atmosphérique</div>
+            <div class="formula-box">FWHM_eff = √(seeing² + (λ/D)²)</div>
+            <p class="lang-en">Practical ground-based observation. Convolves diffraction with Kolmogorov seeing. Compares pixel scale against FWHM_eff / 2. This is the true metric for ground astrophotography.</p>
+            <p class="lang-fr">Observation pratique au sol. Convolue la diffraction avec le seeing de Kolmogorov. Compare le pixel à FWHM_eff / 2. C'est la métrique directrice pour l'astrophotographie au sol.</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <div class="callout-title lang-en">Why an instrument can be simultaneously Undersampled and Oversampled</div>
+          <div class="callout-title lang-fr">Pourquoi un instrument peut être simultanément Sous et Sur-échantillonné</div>
+          <p class="lang-en">
+            Consider a 200 mm f/5 Newtonian (F=1000 mm) with 3.76 µm pixels (pixel scale 0.776″/px).
+            In pure diffraction (λ=550 nm), λ/(2D) = 0.284″, yielding 0.73 px per λ/D → <span class="chip chip-warn">UNDERSAMPLED</span>.
+            However, under standard 2.5″ seeing, FWHM_eff = 2.564″, yielding 3.31 px per FWHM → <span class="chip chip-primary">OVERSAMPLED</span>!
+            Reporting both prevents observers from wrongly adding focal extenders (Barlows) when seeing already limits resolution.
+          </p>
+          <p class="lang-fr">
+            Considérez un Newton 200 mm f/5 (F=1000 mm) avec des pixels de 3,76 µm (échelle 0,776″/px).
+            En diffraction pure (λ=550 nm), λ/(2D) = 0,284″, soit 0,73 px par λ/D → <span class="chip chip-warn">SOUS-ÉCHANTILLONNÉ</span>.
+            Pourtant, sous un seeing standard de 2,5″, la FWHM effective vaut 2,564″, soit 3,31 px par FWHM → <span class="chip chip-primary">SUR-ÉCHANTILLONNÉ</span> !
+            Afficher les deux empêche d'ajouter à tort une lentille de Barlow alors que la turbulence limite déjà la résolution.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section: Screen 2 - Noise -->
+      <section id="noise">
+        <h2 class="lang-en">Screen 2 · Noise Budget & Action Plan</h2>
+        <h2 class="lang-fr">Écran 2 · Budget de Bruit & Plan d'Action</h2>
+
+        <img src="images/noise.png" alt="Screen 2 Noise Budget" class="screenshot">
+
+        <p class="lang-en">
+          Screen 2 inherits optical parameters from Screen 1 and evaluates the full CCD equation across 5 physical noise variances:
+        </p>
+        <p class="lang-fr">
+          L'écran 2 hérite des paramètres optiques de l'écran 1 et résout l'équation CCD complète sur 5 composantes physiques de variance :
+        </p>
+
+        <div class="formula-box">
+          σ²_total = S + n_pix · R_sky · T + n_pix · D · T + N · n_pix · R² + σ²_scint
+        </div>
+
+        <h3 class="lang-en">The Five Noise Regimes</h3>
+        <h3 class="lang-fr">Les Cinq Régimes de Bruit</h3>
+        <table>
+          <thead>
+            <tr>
+              <th class="lang-en">Regime</th>
+              <th class="lang-fr">Régime</th>
+              <th class="lang-en">Physical Dominance</th>
+              <th class="lang-fr">Dominance Physique</th>
+              <th class="lang-en">Corrective Operational Action</th>
+              <th class="lang-fr">Action Opérationnelle Correctrice</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="chip chip-ok">SHOT-LIMITED</span></td>
+              <td class="lang-en">Photon statistics of target (σ²★)</td>
+              <td class="lang-fr">Statistique de photons de la cible (σ²★)</td>
+              <td class="lang-en">Fundamental physical limit. Increase aperture or total integration time.</td>
+              <td class="lang-fr">Limite physique ultime. Augmenter le diamètre ou le temps d'intégration total.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-primary">SKY-LIMITED</span></td>
+              <td class="lang-en">Sky background Poisson noise (σ²_sky)</td>
+              <td class="lang-fr">Bruit de grenaille du fond de ciel (σ²_sky)</td>
+              <td class="lang-en">Seek darker observing site, use narrowband filters. Lengthening sub-exposures no longer changes regime.</td>
+              <td class="lang-fr">Chercher un ciel plus sombre, filtrer en bande étroite. Allonger la sous-pose ne change plus le régime.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-warn">DARK-LIMITED</span></td>
+              <td class="lang-en">Thermal dark current generation (σ²_dark)</td>
+              <td class="lang-fr">Génération thermique d'obscurité (σ²_dark)</td>
+              <td class="lang-en">Cool detector (doubles every 5–7 °C), reduce sensor exposure temperature.</td>
+              <td class="lang-fr">Refroidir le capteur (courant divisé par 2 tous les 5–7 °C), réguler la température.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-error">READ-LIMITED</span></td>
+              <td class="lang-en">Readout electronic amplifier noise (σ²_read)</td>
+              <td class="lang-fr">Bruit électronique de lecture d'amplificateur (σ²_read)</td>
+              <td class="lang-en">Lengthen sub-exposures to drown read noise, increase sensor gain (HCG mode).</td>
+              <td class="lang-fr">Allonger les sous-poses pour noyer la lecture, basculer en gain HCG.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-tertiary">SCINTILLATION</span></td>
+              <td class="lang-en">Atmospheric refractive turbulence (σ²_scint)</td>
+              <td class="lang-fr">Turbulence réfractive de l'atmosphère (σ²_scint)</td>
+              <td class="lang-en">Bright stars on small apertures. Lengthen sub-exposures (∝ 1/√t), observe near zenith, increase aperture (∝ D^−2/3).</td>
+              <td class="lang-fr">Étoiles brillantes sur petites ouvertures. Allonger la sous-pose (∝ 1/√t), observer plus près du zénith, augmenter le diamètre (∝ D^−2/3).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="lang-en">Optimal Sub-Exposure Theorem</h3>
+        <h3 class="lang-fr">Théorème de la Sous-Pose Optimale</h3>
+        <p class="lang-en">
+          A sub-exposure is optimal when background Poisson noise (sky + dark) overwhelms readout noise by a factor of 10:
+        </p>
+        <p class="lang-fr">
+          Une sous-pose est dite optimale lorsque le bruit de grenaille du fond (ciel + obscurité) noie le bruit de lecture par un facteur 10 :
+        </p>
+        <div class="formula-box">t_opt = 10 · R² / (R_sky + D)</div>
+      </section>
+
+      <!-- Section: Screen 3 - Calibration -->
+      <section id="calibration">
+        <h2 class="lang-en">Screen 3 · Calibration Pipeline & Calibration Floor</h2>
+        <h2 class="lang-fr">Écran 3 · Pipeline de Calibration & Plancher Systématique</h2>
+
+        <img src="images/calibration.png" alt="Screen 3 Calibration Pipeline" class="screenshot">
+
+        <p class="lang-en">
+          Screen 3 models the reduction equation: <code class="chip chip-primary">Calibrated = (Light − Dark) / NormalizedFlat</code>.
+        </p>
+        <p class="lang-fr">
+          L'écran 3 modélise l'équation de réduction : <code class="chip chip-primary">Calibré = (Brut − Dark) / FlatNormalisé</code>.
+        </p>
+
+        <div class="callout warn">
+          <div class="callout-title lang-en">The Calibration Floor Theorem</div>
+          <div class="callout-title lang-fr">Le Théorème du Plancher de Calibration</div>
+          <p class="lang-en">
+            The master dark and master flat are subtracted and divided across every single science sub-exposure.
+            Consequently, master noise is perfectly correlated across the stack and <strong>does not decrease</strong> with science frame stacking!
+            The total calibrated noise is:
+          </p>
+          <p class="lang-fr">
+            Le master dark et le master flat sont soustraits et divisés sur chacune des sous-poses scientifiques.
+            Leur bruit est donc corrélé sur tout l'empilement et <strong>ne diminue pas</strong> lors de l'empilement des poses de science !
+            Le bruit calibré total s'écrit :
+          </p>
+          <div class="formula-box">σ_cal = √( (σ_light / √N_poses)² + σ²_master_dark + (Signal · σ_flat_rel)² )</div>
+          <p class="lang-en">
+            As N_poses increases to infinity, the first term vanishes, leaving the irreducible <strong>calibration floor</strong>.
+            To keep master noise below 30% of stacked science noise, the required calibration frames must scale <strong>linearly</strong> with the number of science frames:
+          </p>
+          <p class="lang-fr">
+            Quand N_poses tend vers l'infini, le premier terme s'annule, laissant le <strong>plancher de calibration</strong> irréductible.
+            Pour maintenir le bruit du master sous 30 % du bruit de science empilé, le nombre de poses de calibration requises croît <strong>linéairement</strong> avec le nombre de poses de science :
+          </p>
+          <div class="formula-box">N_calib ≥ N_poses · (σ_single / (0.3 · σ_ref))²</div>
+        </div>
+      </section>
+
+      <!-- Section: Tutorial -->
+      <section id="tutorial">
+        <h2 class="lang-en">Complete Sizing Tutorial · From Photon to Pixel</h2>
+        <h2 class="lang-fr">Tutoriel Complet de Dimensionnement · Du Photon au Pixel</h2>
+
+        <p class="lead lang-en">
+          This tutorial presents the universal step-by-step methodology to model and optimize any observational optical train with PhotonPath — whether configuring an ultra-portable smart telescope, a fast wide-field astrograph, a high-resolution Newtonian reflector, or a Cassegrain planetary system.
+        </p>
+        <p class="lead lang-fr">
+          Ce tutoriel expose la méthodologie universelle pas à pas pour modéliser et optimiser n'importe quelle chaîne optique-détection dans PhotonPath — qu'il s'agisse d'un smart télescope nomade, d'une lunette apochromatique grand champ, d'un télescope Newton à haute résolution ou d'un système Cassegrain.
+        </p>
+
+        <div class="callout primary">
+          <div class="callout-title lang-en">The Unified Physical Workflow Across Three Screens</div>
+          <div class="callout-title lang-fr">Le Déroulé Physique Unifié à Travers les Trois Écrans</div>
+          <p class="lang-en" style="margin:0;">
+            <strong>Screen 1 (Calculator):</strong> Define optical geometry, focal ratio, and reconcile the dual diffraction vs seeing spatial sampling verdicts.<br>
+            <strong>Screen 2 (Noise):</strong> Select target nature (point star vs extended nebula), quantify the 5 noise sources, identify the dominant bottleneck, and compute optimal sub-exposure <em>t</em><sub>opt</sub>.<br>
+            <strong>Screen 3 (Calibration):</strong> Size the calibration master stack (bias, dark, flat) so that calibration residual noise does not degrade final stacked SNR.
+          </p>
+          <p class="lang-fr" style="margin:0;">
+            <strong>Écran 1 (Calculator) :</strong> Définir la géométrie optique, le rapport focal et réconcilier le double verdict d'échantillonnage diffraction / seeing.<br>
+            <strong>Écran 2 (Noise) :</strong> Définir la cible (étoile ponctuelle ou nébuleuse étendue), quantifier les 5 composantes de bruit, identifier le régime limitant et calculer la sous-pose optimale <em>t</em><sub>opt</sub>.<br>
+            <strong>Écran 3 (Calibration) :</strong> Dimensionner l'empilement des poses de calibration (bias, dark, flat) pour que le bruit résiduel des masters ne dégrade pas le S/B final.
+          </p>
+        </div>
+
+        <h3 class="lang-en">Step 1 — Screen 1: Optical Train &amp; Dual Sampling Diagnostics (Calculator)</h3>
+        <h3 class="lang-fr">Étape 1 — Écran 1 : Chaîne Optique &amp; Double Diagnostic d'Échantillonnage (Calculator)</h3>
+
+        <p class="lang-en">
+          Enter your instrument parameters: aperture <em>D</em> (mm), focal length <em>f</em> (mm), observation wavelength <em>λ</em> (default 550 nm for visible V band), pixel pitch <em>p</em> (µm), detector pixel dimensions, and atmospheric seeing <em>θ</em><sub>seeing</sub> (e.g. 2.5″ for average ground sites, 1.5″ for high-altitude mountain observatories).
+        </p>
+        <p class="lang-fr">
+          Saisissez les paramètres de votre instrument : diamètre d'ouverture <em>D</em> (mm), distance focale <em>f</em> (mm), longueur d'onde <em>λ</em> (550 nm par défaut pour la bande visible V), taille physique de pixel <em>p</em> (µm), dimensions de la matrice et seeing atmosphérique <em>θ</em><sub>seeing</sub> (ex. 2,5″ en plaine, 1,5″ en observatoire de montagne).
+        </p>
+
+        <p class="lang-en">
+          To illustrate the physical principles, PhotonPath contrasts two opposite instrumental archetypes:
+        </p>
+        <p class="lang-fr">
+          Pour illustrer la physique sous-jacente, PhotonPath permet d'opposer deux grands archétypes instrumentaux :
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th class="lang-en">Physical Quantity</th>
+              <th class="lang-fr">Grandeur Physique</th>
+              <th class="lang-en">Archetype A: Compact / Wide-Field / Smart Scope (35/150 mm, p = 2.0 µm)</th>
+              <th class="lang-fr">Archétype A : Nomade / Grand Champ / Smart Scope (35/150 mm, p = 2,0 µm)</th>
+              <th class="lang-en">Archetype B: High-Resolution Telescope (Newton 200/1000 mm, p = 3.76 µm)</th>
+              <th class="lang-fr">Archétype B : Télescope Haute Résolution (Newton 200/1000 mm, p = 3,76 µm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="lang-en">Focal Ratio</td><td class="lang-fr">Rapport Focal</td>
+              <td><code>ƒ/4.3</code></td>
+              <td><code>ƒ/5.0</code></td>
+            </tr>
+            <tr>
+              <td class="lang-en">Airy Radius <em>r</em><sub>Airy</sub> = 1.22 <em>λ</em> / <em>D</em></td><td class="lang-fr">Rayon d'Airy <em>r</em><sub>Airy</sub> = 1,22 <em>λ</em> / <em>D</em></td>
+              <td><code>3.95″ (1.44 px)</code></td>
+              <td><code>0.69″ (0.89 px)</code></td>
+            </tr>
+            <tr>
+              <td class="lang-en">Pixel Plate Scale</td><td class="lang-fr">Échelle par Pixel</td>
+              <td><code>2.750″/px</code> (ultra wide-field: 2.93° × 1.65°)</td>
+              <td><code>0.776″/px</code> (deep-sky framing: 1.35° × 0.90°)</td>
+            </tr>
+            <tr>
+              <td class="lang-en">Diffraction Sampling (Shannon-Nyquist)</td><td class="lang-fr">Échantillonnage Diffraction (Shannon-Nyquist)</td>
+              <td><code>1.18 px / (λ/D) · </code><span class="chip chip-warn">UNDERSAMPLED</span></td>
+              <td><code>0.73 px / (λ/D) · </code><span class="chip chip-warn">UNDERSAMPLED</span></td>
+            </tr>
+            <tr>
+              <td class="lang-en">Realized Sampling under Seeing (2.5″)</td><td class="lang-fr">Échantillonnage Réalisé sous Seeing (2,5″)</td>
+              <td><code>1.5 px / FWHM · </code><span class="chip chip-warn">UNDERSAMPLED</span></td>
+              <td><code>3.31 px / FWHM · </code><span class="chip chip-primary">OVERSAMPLED</span></td>
+            </tr>
+            <tr>
+              <td class="lang-en">Physical Diagnosis &amp; Operational Levers</td><td class="lang-fr">Diagnostic Physique &amp; Leviers Opérationnels</td>
+              <td class="lang-en">
+                The optical diffraction spot (3.95″) exceeds atmospheric turbulence. Both verdicts agree: undersampled. Dithering combined with drizzle reconstruction is mandatory to recover spatial detail.
+              </td>
+              <td class="lang-fr">
+                La diffraction optique (3,95″) dépasse la turbulence. Les deux verdicts concordent : sous-échantillonné. Le dithering associé à un empilement drizzle est requis pour retrouver les détails sub-pixels.
+              </td>
+              <td class="lang-en">
+                <strong>The Dual-Verdict Paradox:</strong> Undersampled in space/diffraction theory, but oversampled under ground seeing. Buying smaller pixels would not improve resolution, but would dilute stellar flux across too many pixels.
+              </td>
+              <td class="lang-fr">
+                <strong>Résolution du paradoxe :</strong> Sous-échantillonné en théorie pure (espace), mais sur-échantillonné sous le seeing terrestre. Réduire la taille de pixel n'apporterait aucun détail, mais diluerait le flux sur trop de pixels.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="lang-en">Step 2 — Screen 2: Target Selection, Noise Budget &amp; Optimal Exposure (Noise)</h3>
+        <h3 class="lang-fr">Étape 2 — Écran 2 : Choix de la Cible, Budget de Bruit &amp; Sous-Pose Optimale (Noise)</h3>
+
+        <p class="lang-en">
+          The Noise screen inherits optical geometry and allows complete modeling of the photometric signal and the five variance terms:
+        </p>
+        <p class="lang-fr">
+          L'écran Noise hérite des paramètres optiques et modélise la chaîne photométrique complète ainsi que les cinq termes de variance :
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title lang-en">1. Select Target &amp; Mode</div>
+            <div class="card-title lang-fr">1. Choisir le Mode &amp; la Cible</div>
+            <p class="lang-en">
+              <strong>Point Source (Magnitude / Flux Mode):</strong> For stars, exoplanet transits, or asteroids. Synthetic 2D PSF profile (Moffat + Airy) is numerically integrated over a photometric aperture radius <em>r</em> = <em>k</em> · FWHM.<br>
+              <strong>Extended Source (Extended Mode):</strong> For nebulae and galaxies with surface brightness <em>μ</em><sub>target</sub>. Computations are evaluated per pixel and per arcsecond squared, independent of aperture <em>k</em>.
+            </p>
+            <p class="lang-fr">
+              <strong>Source Ponctuelle (Mode Magnitude / Flux) :</strong> Pour étoiles, transits d'exoplanètes ou astéroïdes. La PSF 2D synthétique (Moffat + Airy) est intégrée sur une ouverture photométrique de rayon <em>r</em> = <em>k</em> · FWHM.<br>
+              <strong>Source Étendue (Mode Extended) :</strong> Pour nébuleuses et galaxies de brillance <em>μ</em><sub>target</sub>. L'analyse s'effectue par pixel et par seconde d'arc au carré, indépendamment du rayon <em>k</em>.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title lang-en">2. Characterize Sensor &amp; Environment</div>
+            <div class="card-title lang-fr">2. Caractériser Capteur &amp; Environnement</div>
+            <p class="lang-en">
+              <strong>Thermal Dark Current <em>D</em>:</strong> 0.5–1.0 e⁻/s for uncooled consumer CMOS sensors; &lt; 0.005 e⁻/s for cooled scientific cameras (-10 °C).<br>
+              <strong>Readout Noise <em>R</em>:</strong> Modern low-noise CMOS sensors typically feature 1.0–2.5 e⁻.<br>
+              <strong>Sky Surface Brightness <em>μ</em><sub>sky</sub>:</strong> 18.0 mag/arcsec² (suburban Bortle 8) to 21.8 mag/arcsec² (pristine dark sky reserve).
+            </p>
+            <p class="lang-fr">
+              <strong>Courant d'obscurité <em>D</em> :</strong> 0,5 à 1,0 e⁻/s sur capteurs non refroidis ; &lt; 0,005 e⁻/s sur caméras régulées à -10 °C.<br>
+              <strong>Bruit de lecture <em>R</em> :</strong> Les capteurs CMOS modernes affichent 1,0 à 2,5 e⁻.<br>
+              <strong>Fond de ciel <em>μ</em><sub>sky</sub> :</strong> 18,0 mag/arcsec² (zone périurbaine Bortle 8) à 21,8 mag/arcsec² (ciel noir d'observatoire).
+            </p>
+          </div>
+        </div>
+
+        <h4 class="lang-en">Operational Levers in the Decision Aid Panel ("?")</h4>
+        <h4 class="lang-fr">Leviers Opérationnels du Volet « Aide à la Décision » (« ? »)</h4>
+
+        <p class="lang-en">
+          Clicking the <strong>"?"</strong> button opens the parametric diagnostic panel offering three critical optimizations:
+        </p>
+        <p class="lang-fr">
+          Un clic sur le bouton <strong>« ? »</strong> ouvre le panneau de diagnostic paramétrique offrant trois optimisations déterminantes :
+        </p>
+
+        <ol>
+          <li>
+            <strong class="lang-en">Identify the Dominant Noise Regime:</strong>
+            <strong class="lang-fr">Identifier le Régime de Bruit Limitant :</strong>
+            <p class="lang-en">
+              If <span class="chip chip-warn">DARK_LIMITED</span> dominates (typical of uncooled sensors), thermal generation swamps star signal. Sensor cooling or shortening sub-exposures is required.<br>
+              If <span class="chip chip-error">READ_LIMITED</span> dominates, sub-exposures are too short; read noise accumulates on each frame.<br>
+              If <span class="chip chip-primary">SKY_LIMITED</span> dominates, you have reached optimal ground performance: background photon Poisson noise sets the limit.<br>
+              If <span class="chip chip-ok">SHOT_LIMITED</span> dominates, the object's own flux variance is primary.<br>
+              If <span class="chip chip-tertiary">SCINTILLATION_LIMITED</span> dominates, atmospheric fluctuations on bright targets dominate; observe closer to zenith or increase aperture.
+            </p>
+            <p class="lang-fr">
+              Si le régime est <span class="chip chip-warn">DARK_LIMITED</span> (fréquent sur capteur non refroidi), le bruit thermique étouffe le signal. Le refroidissement ou des poses plus courtes s'imposent.<br>
+              Si le régime est <span class="chip chip-error">READ_LIMITED</span>, les poses unitaires sont trop courtes et pénalisées par l'amplificateur.<br>
+              Si le régime est <span class="chip chip-primary">SKY_LIMITED</span>, vous atteignez le régime idéal d'astrophotographie où seul le ciel limite la détection.<br>
+              Si le régime est <span class="chip chip-ok">SHOT_LIMITED</span>, le flux de l'étoile domine la statistique.<br>
+              Si le régime est <span class="chip chip-tertiary">SCINTILLATION_LIMITED</span>, les turbulences de haute altitude dominent sur cible brillante ; viser plus haut vers le zénith ou accroître le diamètre.
+            </p>
+          </li>
+          <li>
+            <strong class="lang-en">Compute Optimal Sub-Exposure Duration <em>t</em><sub>opt</sub>:</strong>
+            <strong class="lang-fr">Calculer la Durée de Sous-Pose Optimale <em>t</em><sub>opt</sub> :</strong>
+            <p class="lang-en">
+              PhotonPath calculates the precise unit exposure time <em>t</em><sub>opt</sub> required to submerge readout noise variance below 5% of total background variance:
+              <code>t_opt = (R² / D_bg) · (1/p_read - 1)</code>.
+              Exposing shorter than <em>t</em><sub>opt</sub> sacrifices final SNR to read noise; exposing much longer risks star saturation without any further SNR gain.
+            </p>
+            <p class="lang-fr">
+              PhotonPath calcule la durée unitaire de sous-pose <em>t</em><sub>opt</sub> nécessaire pour noyer la variance de lecture sous 5 % de la variance de fond :
+              <code>t_opt = (R² / D_bg) · (1/p_read - 1)</code>.
+              Poser moins longtemps que <em>t</em><sub>opt</sub> dégrade le S/B final par accumulation de lecture ; poser trop longtemps augmente le risque de saturation sans gain de S/B mesurable.
+            </p>
+          </li>
+          <li>
+            <strong class="lang-en">Optimize Photometric Aperture Radius (<em>k</em>):</strong>
+            <strong class="lang-fr">Optimiser le Rayon d'Ouverture Photométrique (<em>k</em>) :</strong>
+            <p class="lang-en">
+              In point-source photometry, increasing aperture radius gathers more stellar energy <em>E</em>(<em>k</em>), but admits background noise proportional to <em>k</em>².
+              For diffraction-broadened systems (small apertures), reducing <em>k</em> from the standard 1.5 to <strong><em>k</em> ≈ 0.7</strong> increases SNR by <strong>+39%</strong>!
+              For large seeing-limited telescopes, SNR stabilizes around <em>k</em> ≈ 1.2–1.5.
+            </p>
+            <p class="lang-fr">
+              En photométrie d'étoile, agrandir l'ouverture augmente l'énergie collectée <em>E</em>(<em>k</em>), mais fait entrer du fond proportionnellement à <em>k</em>².
+              Sur un instrument à diffraction large (faible ouverture), resserrer <em>k</em> de 1,5 vers <strong><em>k</em> ≈ 0,7</strong> procure un gain spectaculaire de <strong>+39 % de S/B</strong> !
+              Sur un grand télescope limité par le seeing, l'optimum se stabilise vers <em>k</em> ≈ 1,2 à 1,5.
+            </p>
+          </li>
+        </ol>
+
+        <h3 class="lang-en">Step 3 — Screen 3: Sizing the Calibration Master Stack Depth (Calibration)</h3>
+        <h3 class="lang-fr">Étape 3 — Écran 3 : Dimensionnement du Volume de Calibration (Calibration)</h3>
+
+        <p class="lang-en">
+          The Calibration screen inherits the exact session state (sensor <em>D</em>, <em>R</em>, sub-exposure time <em>t</em><sub>sub</sub>, and sky electrons per frame).
+          Subtracting a master dark and dividing by a master flat unavoidably transfers calibration residual noise into every science sub-exposure:
+        </p>
+        <p class="lang-fr">
+          L'écran Calibration hérite fidèlement de la séance (paramètres capteur <em>D</em>, <em>R</em>, durée de sous-pose <em>t</em><sub>sub</sub> et flux du fond de ciel).
+          La soustraction d'un master dark et la division par un master flat injectent inévitablement leur bruit résiduel dans chaque pose scientifique :
+        </p>
+
+        <div class="callout warn">
+          <div class="callout-title lang-en">The Hidden Pitfall: The Calibration Floor</div>
+          <div class="callout-title lang-fr">Le Piège Caché : Le Plancher de Bruit de Calibration</div>
+          <p class="lang-en" style="margin:0;">
+            With a shallow calibration stack (e.g. only 16 darks and flats), calibration master noise variance can account for <strong>over 60% of total noise variance</strong> in the final stacked image!
+            Stacking more science lights cannot overcome a noisy calibration master.
+          </p>
+          <p class="lang-fr" style="margin:0;">
+            Avec un empilement de calibration trop faible (ex. 16 darks et flats seulement), la variance résiduelle des masters peut représenter <strong>plus de 60 % de la variance totale</strong> de l'image finale empilée !
+            Ajouter des poses brutes scientifiques ne compense jamais un master bruité.
+          </p>
+        </div>
+
+        <p class="lang-en">
+          PhotonPath computes the recommended calibration count <em>N</em><sub>cal_opt</sub> to ensure master noise accounts for less than 10% of total variance:
+        </p>
+        <p class="lang-fr">
+          PhotonPath calcule le nombre de poses de calibration recommandé <em>N</em><sub>cal_opt</sub> pour garantir que le bruit des masters pèse moins de 10 % de la variance totale :
+        </p>
+        <ul>
+          <li class="lang-en"><strong>Cooled Sensors (<em>D</em> &lt; 0.005 e⁻/s):</strong> 30 to 50 dark and flat frames easily push calibration floor noise below 5%.</li>
+          <li class="lang-fr"><strong>Capteurs Refroidis (<em>D</em> &lt; 0,005 e⁻/s) :</strong> 30 à 50 darks et flats suffisent largement pour abaisser le plancher de calibration sous les 5 %.</li>
+          <li class="lang-en"><strong>Uncooled Sensors (<em>D</em> = 0.5 e⁻/s):</strong> The high thermal accumulation requires 300+ calibration frames to prevent master dark noise from degrading the scientific stack.</li>
+          <li class="lang-fr"><strong>Capteurs Non Refroidis (<em>D</em> = 0,5 e⁻/s) :</strong> L'accumulation thermique élevée impose plus de 300 poses de dark pour éviter que le bruit du master ne pénalise la pile finale.</li>
+        </ul>
+
+        <h3 class="lang-en">Cross-Instrument Sizing Matrix: 3 Typical Astrophotography Setups</h3>
+        <h3 class="lang-fr">Matrice Comparative de Dimensionnement : 3 Configurations Typiques</h3>
+
+        <p class="lang-en">
+          The table below demonstrates how PhotonPath's unified physical modeling applies across three real-world observing configurations:
+        </p>
+        <p class="lang-fr">
+          Le tableau ci-dessous illustre l'application directe des modèles physiques de PhotonPath sur trois configurations d'observation réelles :
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th class="lang-en">Setup Profile</th>
+              <th class="lang-fr">Profil Instrumental</th>
+              <th class="lang-en">Optical &amp; Sensor Specifications</th>
+              <th class="lang-fr">Spécifications Optique &amp; Capteur</th>
+              <th class="lang-en">Sampling Verdicts</th>
+              <th class="lang-fr">Verdicts d'Échantillonnage</th>
+              <th class="lang-en">Dominant Noise Regime (m = 15, μ = 20.5)</th>
+              <th class="lang-fr">Régime de Bruit Dominant (m = 15, μ = 20,5)</th>
+              <th class="lang-en">Optimal Sub-Exposure &amp; Calibration</th>
+              <th class="lang-fr">Sous-Pose Optimale &amp; Calibration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong class="lang-en">1. Ultra-Portable Smart Scope / Telephoto</strong><strong class="lang-fr">1. Smart Scope / Téléobjectif Nomade</strong></td>
+              <td>D = 35 mm, f = 150 mm (ƒ/4.3)<br>CMOS non refroidi, p = 2.0 µm<br>D = 0.5 e⁻/s, R = 1.5 e⁻</td>
+              <td>
+                2.75″/px<br>
+                Diffraction : <span class="chip chip-warn">Undersampled (1.18)</span><br>
+                Seeing (2.5″) : <span class="chip chip-warn">Undersampled (1.5)</span>
+              </td>
+              <td>
+                <span class="chip chip-warn">DARK_LIMITED</span><br>
+                Dark accounts for 46% of variance.<br>
+                Optimal aperture radius <em>k</em> = 0.7 (+39% SNR gain).
+              </td>
+              <td>
+                <em>t</em><sub>opt</sub> ≈ 32 s.<br>
+                Recommended calibration: <strong>~340 frames</strong> to suppress high thermal noise floor.
+              </td>
+            </tr>
+            <tr>
+              <td><strong class="lang-en">2. Apochromatic Refractor Deep-Sky Setup</strong><strong class="lang-fr">2. Lunette APO Ciel Profond</strong></td>
+              <td>D = 80 mm, f = 480 mm (ƒ/6.0)<br>Cooled CMOS (IMX571), p = 3.76 µm<br>D = 0.002 e⁻/s (-10 °C), R = 1.4 e⁻</td>
+              <td>
+                1.62″/px<br>
+                Diffraction : <span class="chip chip-warn">Undersampled (0.93)</span><br>
+                Seeing (2.5″) : <span class="chip chip-ok">Critical (1.98)</span>
+              </td>
+              <td>
+                <span class="chip chip-primary">SKY_LIMITED</span><br>
+                Sky background accounts for &gt; 70% of variance.<br>
+                Optimal aperture radius <em>k</em> = 1.2–1.4.
+              </td>
+              <td>
+                <em>t</em><sub>opt</sub> ≈ 120–180 s.<br>
+                Recommended calibration: <strong>~40 frames</strong> (dark noise negligible).
+              </td>
+            </tr>
+            <tr>
+              <td><strong class="lang-en">3. High-Resolution Newtonian / SCT Setup</strong><strong class="lang-fr">3. Télescope Newton / SCT Haute Résolution</strong></td>
+              <td>D = 200 mm, f = 1000 mm (ƒ/5.0)<br>Cooled CMOS (IMX571), p = 3.76 µm<br>D = 0.002 e⁻/s (-10 °C), R = 1.4 e⁻</td>
+              <td>
+                0.78″/px<br>
+                Diffraction : <span class="chip chip-warn">Undersampled (0.73)</span><br>
+                Seeing (2.5″) : <span class="chip chip-primary">Oversampled (3.31)</span>
+              </td>
+              <td>
+                <span class="chip chip-primary">SKY_LIMITED</span><br>
+                Sky background dominates.<br>
+                High light grasp speeds up acquisition.
+              </td>
+              <td>
+                <em>t</em><sub>opt</sub> ≈ 60–90 s (fast ƒ/5.0 system).<br>
+                Recommended calibration: <strong>~40 frames</strong>. Consider 2×2 binning if seeing exceeds 3″.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section: Verdicts & Decision Aid -->
+      <section id="verdicts">
+        <h2 class="lang-en">Verdicts & Decision Aid</h2>
+        <h2 class="lang-fr">Verdicts & Aide à la Décision</h2>
+
+        <p class="lang-en">
+          PhotonPath provides clear operational verdicts for both spatial sampling and noise budget analysis, coupled with diagnostic curves in the Decision Aid panel.
+        </p>
+        <p class="lang-fr">
+          PhotonPath délivre des verdicts opérationnels explicites tant pour l'échantillonnage spatial que pour l'analyse du budget de bruit, accompagnés de courbes diagnostiques dans le volet d'Aide à la décision.
+        </p>
+
+        <h3 class="lang-en">Comprehensive Verdict Matrix</h3>
+        <h3 class="lang-fr">Matrice Complète des Verdicts</h3>
+        <table>
+          <thead>
+            <tr>
+              <th class="lang-en">Verdict</th>
+              <th class="lang-fr">Verdict</th>
+              <th class="lang-en">Category</th>
+              <th class="lang-fr">Catégorie</th>
+              <th class="lang-en">Physical Diagnosis</th>
+              <th class="lang-fr">Diagnostic Physique</th>
+              <th class="lang-en">Operational Guidance</th>
+              <th class="lang-fr">Levier Opérationnel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="chip chip-warn">Undersampled</span></td>
+              <td class="lang-en">Spatial Sampling</td>
+              <td class="lang-fr">Échantillonnage</td>
+              <td class="lang-en">Fewer than 2 pixels per resolution element (SR &lt; 0.95). High spatial frequencies are aliased.</td>
+              <td class="lang-fr">Moins de 2 pixels par élément de résolution (ratio &lt; 0,95). Risque de repliement de spectre (aliasing).</td>
+              <td class="lang-en">Use longer focal length, smaller pixels, or dithered acquisitions with drizzle reconstruction.</td>
+              <td class="lang-fr">Allonger la focale, réduire la taille de pixel, ou combiner dithering et empilement drizzle.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-ok">Critical</span></td>
+              <td class="lang-en">Spatial Sampling</td>
+              <td class="lang-fr">Échantillonnage</td>
+              <td class="lang-en">Matched within ±5% of the Shannon-Nyquist limit (0.95 ≤ SR ≤ 1.05).</td>
+              <td class="lang-fr">Échantillonnage parfait à ±5 % du critère de Shannon-Nyquist (0,95 ≤ ratio ≤ 1,05).</td>
+              <td class="lang-en">Optimal spatial sampling: all optical resolution is preserved with minimal flux dilution.</td>
+              <td class="lang-fr">Configuration idéale : toute la résolution optique est captée sans dilution inutile du flux.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-primary">Oversampled</span></td>
+              <td class="lang-en">Spatial Sampling</td>
+              <td class="lang-fr">Échantillonnage</td>
+              <td class="lang-en">More than 2 pixels per resolution element (SR &gt; 1.05).</td>
+              <td class="lang-fr">Plus de 2 pixels par élément de résolution (ratio &gt; 1,05). Élargissement excessif.</td>
+              <td class="lang-en">Flux is spread over too many pixels, reducing SNR per pixel. Consider pixel binning (2×2) or a focal reducer.</td>
+              <td class="lang-fr">Le flux est dilué sur trop de pixels, pénalisant le S/B par pixel. Envisager un réducteur de focale ou un binning 2×2.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-ok">Shot-limited</span></td>
+              <td class="lang-en">Noise Budget</td>
+              <td class="lang-fr">Budget de Bruit</td>
+              <td class="lang-en">Target photon Poisson variance dominates total variance (σ²★ &gt; others).</td>
+              <td class="lang-fr">La statistique de grenaille des photons de l'étoile domine la variance totale (σ²★ &gt; autres).</td>
+              <td class="lang-en">Ultimate physical limit. Only a larger aperture or longer total exposure time will improve SNR.</td>
+              <td class="lang-fr">Limite physique absolue. Seul un diamètre accru ou un temps d'intégration total supérieur améliore le S/B.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-primary">Sky-limited</span></td>
+              <td class="lang-en">Noise Budget</td>
+              <td class="lang-fr">Budget de Bruit</td>
+              <td class="lang-en">Sky background Poisson noise dominates (σ²_sky &gt; others).</td>
+              <td class="lang-fr">Le fond de ciel diffus domine le bruit (σ²_ciel &gt; autres).</td>
+              <td class="lang-en">Observe from a darker sky site or use narrowband filters (Hα, [O III]). Sub-exposure length no longer affects regime.</td>
+              <td class="lang-fr">Rechercher un ciel plus sombre ou filtrer en bande étroite. Rallonger les sous-poses ne change plus le régime.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-warn">Dark-limited</span></td>
+              <td class="lang-en">Noise Budget</td>
+              <td class="lang-fr">Budget de Bruit</td>
+              <td class="lang-en">Sensor thermal dark current generation dominates (σ²_dark &gt; others).</td>
+              <td class="lang-fr">Le courant d'obscurité thermique du capteur domine la variance (σ²_dark &gt; autres).</td>
+              <td class="lang-en">Cool and regulate the sensor (rate halves every 5–7 °C), or shorten individual sub-exposures.</td>
+              <td class="lang-fr">Refroidir et réguler le capteur (débit divisé par 2 tous les 5–7 °C), ou raccourcir la sous-pose.</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-error">Read-limited</span></td>
+              <td class="lang-en">Noise Budget</td>
+              <td class="lang-fr">Budget de Bruit</td>
+              <td class="lang-en">Electronic readout amplifier noise dominates (σ²_read &gt; others).</td>
+              <td class="lang-fr">Le bruit de lecture électronique d'amplification domine (σ²_read &gt; autres).</td>
+              <td class="lang-en">Sub-exposures are too short! Lengthen sub-exposures towards t_opt, or switch camera to high conversion gain (HCG).</td>
+              <td class="lang-fr">Sous-poses trop courtes ! Allonger les poses vers t_opt ou passer la caméra en mode gain élevé (HCG).</td>
+            </tr>
+            <tr>
+              <td><span class="chip chip-tertiary">Scintillation</span></td>
+              <td class="lang-en">Noise Budget</td>
+              <td class="lang-fr">Budget de Bruit</td>
+              <td class="lang-en">Turbulent atmospheric intensity fluctuations dominate on bright stars (σ²_scint &gt; others).</td>
+              <td class="lang-fr">Les fluctuations d'intensité de l'atmosphère dominent sur étoile brillante (σ²_scint &gt; autres).</td>
+              <td class="lang-en">Lengthen sub-exposures (variance scales as 1/t), observe targets near zenith (X^1.75), or increase aperture (D^−2/3).</td>
+              <td class="lang-fr">Allonger la sous-pose (variance en 1/t), observer au zénith (masse d'air^1,75) ou augmenter le diamètre (D^−2/3).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="lang-en">The Decision Aid Panel</h3>
+        <h3 class="lang-fr">Le Volet « Aide à la Décision »</h3>
+
+        <img src="images/noise_manual.png" alt="Decision Aid Panel" class="screenshot">
+
+        <p class="lang-en">
+          Accessible via the <strong>"?"</strong> button on Screen 2, the Decision Aid panel offers three interactive parametric analyses:
+        </p>
+        <p class="lang-fr">
+          Accessible via le bouton <strong>« ? »</strong> de l'écran 2, le volet Aide à la décision propose trois analyses paramétriques interactives :
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title lang-en">1. Aperture Radius Optimization k</div>
+            <div class="card-title lang-fr">1. Optimisation du Rayon k</div>
+            <p class="lang-en">
+              Displays the curve of SNR versus aperture radius factor <em>k</em>. In background-limited regimes, the mathematical optimum lies at <em>k</em> ≈ 0.7 (Merline &amp; Howell 1995), delivering up to +39% higher SNR than the conservative default <em>k</em> = 1.5.
+            </p>
+            <p class="lang-fr">
+              Trace la courbe du S/B en fonction du multiplicateur de rayon <em>k</em>. En régime limité par le fond, l'optimum mathématique se situe vers <em>k</em> ≈ 0,7 (Merline &amp; Howell 1995), procurant jusqu'à +39 % de gain en S/B par rapport au réglage conservateur <em>k</em> = 1,5.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title lang-en">2. Sub-Exposure Partitioning Trade-Off</div>
+            <div class="card-title lang-fr">2. Découpage des Sous-Poses à Durée Égale</div>
+            <p class="lang-en">
+              Evaluates SNR across different sub-exposure lengths for a fixed total observing session. Illustrates where readout noise diminishes to negligible levels while keeping individual exposures safe from tracking errors and star saturation.
+            </p>
+            <p class="lang-fr">
+              Évalue le S/B pour différentes durées de sous-pose à temps d'observation total fixé. Révèle la durée seuil où le bruit de lecture devient négligeable sans exposer inutilement aux erreurs de suivi ou à la saturation d'étoiles.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Measuring Sensor -->
+      <section id="sensor">
+        <h2 class="lang-en">Measuring Your Sensor (D, R, Well)</h2>
+        <h2 class="lang-fr">Mesurer son Capteur (D, R, Puits)</h2>
+
+        <p class="lang-en">
+          Manufacturer specification sheets rarely report dark current and read noise for the exact gain and temperature you use in the field. 
+          Measuring these parameters directly on your own sensor is simple and requires only a set of raw calibration frames.
+        </p>
+        <p class="lang-fr">
+          Les fiches techniques des constructeurs mentionnent rarement le courant d'obscurité et le bruit de lecture pour le gain et la température réels de vos séances.
+          Mesurer ces paramètres directement sur vos trames brutes est simple et ne requiert qu'une série de poses d'étalonnage.
+        </p>
+
+        <div class="callout ok">
+          <div class="callout-title lang-en">Key Conversion: Electrons vs ADU</div>
+          <div class="callout-title lang-fr">Conversion Fondamentale : Électrons vs ADU</div>
+          <p class="lang-en" style="margin:0;">
+            Raw image files (FITS, RAW) record values in Analog-to-Digital Units (ADU). 
+            PhotonPath computes physical quantities in <strong>electrons (e⁻)</strong>. 
+            The link is the system gain <em>g</em> [e⁻/ADU] : <code class="chip chip-primary">e⁻ = ADU × gain</code>.
+          </p>
+          <p class="lang-fr" style="margin:0;">
+            Les fichiers bruts (FITS, RAW) enregistrent des valeurs en ADU (unités du convertisseur analogique-numérique).
+            PhotonPath modélise les grandeurs physiques en <strong>électrons (e⁻)</strong>.
+            Le pont est le gain du capteur <em>g</em> [e⁻/ADU] : <code class="chip chip-primary">e⁻ = ADU × gain</code>.
+          </p>
+        </div>
+
+        <h3 class="lang-en">Standard Sensor Characterization Protocol</h3>
+        <h3 class="lang-fr">Protocole de Mesure Instrumentale</h3>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title lang-en">1. Readout Noise R [e⁻]</div>
+            <div class="card-title lang-fr">1. Bruit de Lecture R [e⁻]</div>
+            <p class="lang-en">
+              Acquire 2 bias frames (<em>B</em><sub>1</sub>, <em>B</em><sub>2</sub>) at the shortest possible exposure (e.g. 1/1000 s). Subtract them to eliminate fixed electronic pattern:
+            </p>
+            <p class="lang-fr">
+              Acquérir 2 poses d'offset/bias (<em>B</em><sub>1</sub>, <em>B</em><sub>2</sub>) au temps de pose le plus court possible (ex. 1/1000 s). Les soustraire pour éliminer le motif fixe :
+            </p>
+            <div class="formula-box">R = (σ(B₁ − B₂) / √2) · gain &nbsp;[e⁻]</div>
+          </div>
+          <div class="card">
+            <div class="card-title lang-en">2. Thermal Dark Current D [e⁻/s/px]</div>
+            <div class="card-title lang-fr">2. Courant d'Obscurité D [e⁻/s/px]</div>
+            <p class="lang-en">
+              Acquire dark frames at increasing exposure times (<em>t</em> = 1 s, 5 s, 15 s, 30 s, 60 s) at operating temperature. Measure median ADU increase:
+            </p>
+            <p class="lang-fr">
+              Acquérir des darks de durées croissantes (<em>t</em> = 1 s, 5 s, 15 s, 30 s, 60 s) à la température d'usage. Mesurer la croissance médiane :
+            </p>
+            <div class="formula-box">D = (ΔADU / Δt) · gain &nbsp;[e⁻·s⁻¹·px⁻¹]</div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <div class="callout-title lang-en">Thermal Stability Rule</div>
+          <div class="callout-title lang-fr">Règle de Stabilité Thermique</div>
+          <p class="lang-en">
+            Thermal dark current generation doubles approximately every 5 to 7 °C. 
+            A value of <em>D</em> = 0.02 e⁻/s measured on a sensor regulated at −10 °C will increase to ≈ 0.32 e⁻/s at +10 °C! 
+            Always enter the dark current value corresponding to your actual observing sensor temperature.
+          </p>
+          <p class="lang-fr">
+            La génération thermique de courant d'obscurité double environ tous les 5 à 7 °C.
+            Une valeur <em>D</em> = 0,02 e⁻/s mesurée sur capteur régulé à −10 °C grimpe à ≈ 0,32 e⁻/s à +10 °C !
+            Veillez toujours à renseigner la valeur correspondant à la température effective de fonctionnement de votre caméra.
+          </p>
+        </div>
+      </section>
+
+      <!-- Section: Physics Engine Reference -->
+      <section id="physics">
+        <h2 class="lang-en">Physics Engine Reference & Equations</h2>
+        <h2 class="lang-fr">Moteur Physique & Équations de Référence</h2>
+
+        <p class="lang-en">
+          All formulas are implemented as pure SI functions in <code>src/photonpath/domain/physics/</code> and strictly validated against analytical benchmarks and Android golden reference data:
+        </p>
+        <p class="lang-fr">
+          Toutes les formules sont implémentées sous forme de fonctions pures en SI dans <code>src/photonpath/domain/physics/</code> et rigoureusement validées sur cas-tests analytiques et référence Android :
+        </p>
+
+        <div class="card">
+          <div class="card-title lang-en">1. Incoherent Spatial Cutoff Frequency</div>
+          <div class="card-title lang-fr">1. Fréquence de Coupure Incohérente</div>
+          <div class="formula-box">f_c = D / λ &nbsp;[cycles·rad⁻¹] &nbsp;·&nbsp; Δθ_c = λ / (2D) &nbsp;[rad]</div>
+          <p class="lang-en">Reference: Léna et al. (2008), Perez (Optics). Test case: D = 200 mm, λ = 550 nm ⇒ f_c = 363,636 cycles/rad, Δθ_c = 0.284″.</p>
+          <p class="lang-fr">Référence : Léna et al. (2008), Pérez (Optique). Cas-test : D = 200 mm, λ = 550 nm ⇒ f_c = 363 636 cycles/rad, Δθ_c = 0,284″.</p>
+        </div>
+
+        <div class="card" style="margin-top: 16px;">
+          <div class="card-title lang-en">2. Synthetic Photometry & Extinction</div>
+          <div class="card-title lang-fr">2. Photométrie Synthétique & Extinction</div>
+          <div class="formula-box">R★ = F_0(λ) · 10^(−0.4·(m + k·X)) · A · Δλ · η · QE &nbsp;[e⁻·s⁻¹]</div>
+          <p class="lang-en">Zero points: Bessell (1990) UBVRI passbands. Linear interpolation for custom narrowband filters.</p>
+          <p class="lang-fr">Points zéro : bandes Bessell (1990) UBVRI. Interpolation linéaire continue pour filtres à bande étroite.</p>
+        </div>
+
+        <div class="card" style="margin-top: 16px;">
+          <div class="card-title lang-en">3. Composite Airy ⊛ Kolmogorov PSF Enclosed Energy</div>
+          <div class="card-title lang-fr">3. Énergie Encadrée Composite Airy ⊛ Kolmogorov</div>
+          <div class="formula-box">E(k) = w · E_gauss(k) + (1 − w) · E_airy(v), &nbsp; w = seeing² / FWHM_eff²</div>
+          <p class="lang-en">E_gauss(k) = 1 − exp(−k²·2.3548²/2) · E_airy(v) = 1 − J₀²(v) − J₁²(v) with Bessel polynomials (Abramowitz & Stegun §9.4).</p>
+          <p class="lang-fr">E_gauss(k) = 1 − exp(−k²·2,3548²/2) · E_airy(v) = 1 − J₀²(v) − J₁²(v) par polynômes tabulés (Abramowitz & Stegun §9.4).</p>
+        </div>
+
+        <div class="card" style="margin-top: 16px;">
+          <div class="card-title lang-en">4. Atmospheric Scintillation Model</div>
+          <div class="card-title lang-fr">4. Modèle de Scintillation Atmosphérique</div>
+          <div class="formula-box">s = 0.09 · D_cm^(−2/3) · X^1.75 · exp(−h / 8000) · (2t)^(−1/2)</div>
+          <p class="lang-en">References: Young (1967), Dravins et al. (1998 PASP 110, 610). Scaled by D^−2/3 and airmass^1.75.</p>
+          <p class="lang-fr">Références : Young (1967), Dravins et al. (1998 PASP 110, 610). Dépendance en D^−2/3 et masse d'air^1,75.</p>
+        </div>
+      </section>
+
+      <!-- Section: Scientific Publication -->
+      <section id="article">
+        <div class="journal-meta">
+          <span>Astronomy &amp; Computing / Astronomical Instrumentation</span>
+          <span>Peer-Reviewed Model · Open Science</span>
+        </div>
+
+        <h1 class="article-title lang-en">
+          PhotonPath: A Unified Optical-to-Detector Modeling and Dimensioning Framework for Observational Astronomy — From Photon to Pixel
+        </h1>
+        <h1 class="article-title lang-fr">
+          PhotonPath : Un Cadre Unifié de Modélisation et de Dimensionnement de la Chaîne Optique-Détection en Astronomie Observationnelle — Du Photon au Pixel
+        </h1>
+
+        <div class="article-authors">Christophe Humbert</div>
+        <div class="article-affiliation lang-en">Independent Observational Astronomy Research, France</div>
+        <div class="article-affiliation lang-fr">Recherche Indépendante en Astronomie Observationnelle, France</div>
+
+        <!-- Abstract Block -->
+        <div class="abstract-box">
+          <div class="abstract-title lang-en">Abstract</div>
+          <div class="abstract-title lang-fr">Résumé</div>
+
+          <div class="abstract-text lang-en">
+            <strong>Context.</strong> Planning astronomical imaging campaigns requires reconciling geometric wave optics, turbulent atmospheric transfer (seeing and scintillation), synthetic broadband and narrowband photometry, semiconductor detector noise, and data reduction calibration statistics. Observers routinely encounter conflicting rules of thumb regarding critical sampling, optimal sub-exposure times, and calibration frame counts.<br>
+            <strong>Aims.</strong> We introduce <em>PhotonPath</em>, an open-source, deterministic, SI-compliant numerical modeling framework that unifies the entire optical-to-detector pipeline without requiring internet connectivity or proprietary software.<br>
+            <strong>Methods.</strong> The framework integrates three core physical modules: (1) dual-verdict spatial sampling resolving the contradiction between the incoherent diffraction cutoff <em>f</em><sub>c</sub> = <em>D</em> / λ and the Kolmogorov effective seeing FWHM<sub>eff</sub> = √(θ<sub>seeing</sub>² + (λ/<em>D</em>)²); (2) a generalized CCD noise budget incorporating Bessell standard zero-points, Pogson atmospheric extinction, an analytical composite Airy ⊛ Kolmogorov PSF enclosed energy model <em>E</em>(<em>k</em>), central saturation guarding via equivalent area addition, Young–Dravins atmospheric scintillation, and five noise regime classifications; and (3) a rigorous calibration noise propagation engine formulating the <em>Calibration Floor Theorem</em> and establishing the linear growth law <em>N</em><sub>calib</sub> ∝ <em>N</em><sub>poses</sub>.<br>
+            <strong>Results.</strong> The engine is validated across 36 observational scenarios spanning small wide-field smart telescopes (aperture 35 mm, <em>f</em>/4.3) to observatory-class reflectors (200 mm, <em>f</em>/5). Numerical parity against independent JVM reference computations demonstrates exact bit-level agreement on 1,529 floating-point variables (and within 1 ULP on the remaining 2). We show that the dual verdict prevents erroneous optical modifications, prove that reducing the photometric aperture radius to <em>k</em> ≈ 0.7 increases SNR by up to 39% under background dominance, and demonstrate that master dark frames establish an irreducible noise floor unless calibration counts scale proportionally with science stack depth.<br>
+            <strong>Conclusions.</strong> PhotonPath delivers a transparent, fully offline, privacy-preserving dimensioning tool bridging theoretical astrophysics and observational practice.
+          </div>
+
+          <div class="abstract-text lang-fr">
+            <strong>Contexte.</strong> La planification d'une séance d'imagerie astronomique exige de réconcilier l'optique ondulatoire, le transfert atmosphérique turbulent (seeing et scintillation), la photométrie synthétique en bande large et étroite, le bruit des capteurs à semi-conducteurs et la statistique de calibration. Les observateurs se heurtent fréquemment à des règles empiriques contradictoires concernant l'échantillonnage critique, les temps de sous-pose optimaux et le nombre de poses de calibration.<br>
+            <strong>Objectifs.</strong> Nous présentons <em>PhotonPath</em>, un moteur de modélisation numérique déterministe en unités SI strictes, libre et exécutable intégralement hors-ligne sans dépendance réseau.<br>
+            <strong>Méthodes.</strong> Le système articule trois modules physiques : (1) un double verdict d'échantillonnage spatial résolvant la contradiction entre coupure de diffraction <em>f</em><sub>c</sub> = <em>D</em> / λ et seeing effectif de Kolmogorov FWHM<sub>eff</sub> = √(θ<sub>seeing</sub>² + (λ/<em>D</em>)²) ; (2) un budget de bruit CCD généralisé intégrant les points zéro standards de Bessell, l'extinction atmosphérique de Pogson, un modèle composite analytique d'énergie encadrée Airy ⊛ Kolmogorov <em>E</em>(<em>k</em>), la protection de saturation centrale par additivité des aires équivalentes, la scintillation de Young–Dravins et la classification en cinq régimes de bruit ; et (3) un modèle de propagation du bruit de calibration énonçant le <em>Théorème du Plancher de Calibration</em> et établissant la loi de croissance linéaire <em>N</em><sub>calib</sub> ∝ <em>N</em><sub>poses</sub>.<br>
+            <strong>Résultats.</strong> Le modèle est validé sur 36 scénarios observationnels couvrant du téléobjectif grand champ (35 mm, <em>f</em>/4,3) au télescope de classe observatoire (200 mm, <em>f</em>/5). La parité numérique face à une référence JVM démontre une concordance au bit près sur 1 529 variables (et à 1 ULP sur les 2 restantes). Nous démontrons que le double verdict empêche des modifications optiques erronées, prouvons que le réglage <em>k</em> ≈ 0,7 bonifie le S/B jusqu'à +39 % en régime limité par le fond, et établissons que les masters de calibration imposent un plancher de bruit irréductible si leur nombre ne croît pas proportionnellement à l'empilement.<br>
+            <strong>Conclusions.</strong> PhotonPath fournit un outil prédictif, hors-ligne et respectueux de la vie privée, comblant le fossé entre astrophysique théorique et pratique instrumentale.
+          </div>
+
+          <div class="keywords">
+            <strong>Keywords:</strong> instrumentation: detectors — methods: numerical — techniques: photometric — atmospheric effects — telescopes
+          </div>
+        </div>
+
+        <!-- Section 1: Introduction -->
+        <h2 class="lang-en">1. Introduction</h2>
+        <h2 class="lang-fr">1. Introduction</h2>
+
+        <p class="lang-en">
+          Modern observational astronomy and amateur astrophotography have witnessed a profound technological revolution over the past two decades. 
+          Back-illuminated CMOS detectors with sub-electron readout noise, compact smart telescopes with automated alt-azimuth and equatorial mounts, and sophisticated post-processing pipelines have made deep-sky imaging accessible to thousands of observers worldwide.
+          However, the pre-observation dimensioning phase — determining whether an optical setup is spatially matched to a detector, estimating achievable signal-to-noise ratio (SNR) in a given integration time, preventing sensor saturation, and budgeting calibration frames — remains fraught with empirical guesswork.
+        </p>
+        <p class="lang-fr">
+          L'astronomie observationnelle contemporaine et l'astrophotographie amateur ont connu une mutation technologique sans précédent au cours des deux dernières décennies.
+          La généralisation des capteurs CMOS rétroéclairés à bruit de lecture sub-électronique, l'émergence des télescopes intelligents compacts et les pipelines de traitement numérique ont démocratisé l'imagerie du ciel profond.
+          Néanmoins, la phase de dimensionnement préalable — vérifier l'adéquation spatiale d'un ensemble optique-capteur, estimer le rapport signal/bruit (S/B) atteignable en un temps d'intégration donné, éviter la saturation et planifier les poses de calibration — demeure trop souvent régie par des règles empiriques approximatives.
+        </p>
+
+        <p class="lang-en">
+          Existing Exposure Time Calculators (ETCs) developed for major facilities (e.g., ESO ETC, HST ETC) are specialized for specific professional instruments, hosted remotely on web servers, and closed to amateur configurations. 
+          Conversely, popular amateur tools frequently isolate geometric focal calculations from noise equations, neglect the correlation of calibration masters, or rely on oversimplified Gaussian approximations that fail in the diffraction-limited regime.
+          To address this gap, we present <em>PhotonPath</em>, an open-source, deterministic modeling engine designed to model the complete chain from photon incidence at the entrance pupil to the calibrated pixel stack.
+        </p>
+        <p class="lang-fr">
+          Les calculateurs de temps de pose (ETC) des grands observatoires (ex. ESO, HST) sont dédiés à des instruments professionnels spécifiques, hébergés sur des serveurs distants et inadaptés aux configurations des observatoires amateurs.
+          Inversement, les outils grand public séparent l'optique géométrique des équations de bruit, négligent la corrélation statistique des masters de calibration ou recourent à des approximations gaussiennes simplistes qui s'effondrent en régime de diffraction.
+          Pour surmonter ces limites, nous présentons <em>PhotonPath</em>, un moteur de modélisation numérique déterministe modélisant la chaîne complète, du photon incident sur la pupille d'entrée jusqu'au pixel calibré.
+        </p>
+
+        <!-- Section 2: Optics and Sampling -->
+        <h2 class="lang-en">2. Optical Chain and Incoherent Spatial Sampling</h2>
+        <h2 class="lang-fr">2. Chaîne Optique et Échantillonnage Spatial Incohérent</h2>
+
+        <p class="lang-en">
+          Let an optical system possess an entrance pupil diameter <em>D</em> [m] and effective focal length <em>F</em> [m]. The focal ratio is defined as <em>N</em> = <em>F</em> / <em>D</em>. 
+          For a monochromatic wavelength λ, the first zero of the circular diffraction pattern (Airy disc) occurs at angular radius:
+        </p>
+        <p class="lang-fr">
+          Considérons un système optique d'ouverture de pupille d'entrée <em>D</em> [m] et de distance focale <em>F</em> [m]. Le rapport d'ouverture est <em>N</em> = <em>F</em> / <em>D</em>.
+          À une longueur d'onde λ, le premier anneau sombre de la figure de diffraction circulaire (disque d'Airy) apparaît au rayon angulaire :
+        </p>
+
+        <div class="equation">
+          <span>θ_Airy = (j₁,₁ / π) · (λ / D) = 1.21966989... · (λ / D) &nbsp;[rad]</span>
+          <span class="eq-num">(1)</span>
+        </div>
+
+        <p class="lang-en">
+          where <em>j</em><sub>1,1</sub> ≈ 3.831706 is the first non-zero root of the Bessel function of the first kind of order one, <em>J</em><sub>1</sub>(<em>x</em>).
+          At the focal plane, a detector with square pixel pitch <em>p</em> [m] establishes the angular pixel scale:
+        </p>
+        <p class="lang-fr">
+          où <em>j</em><sub>1,1</sub> ≈ 3,831706 est le premier zéro non nul de la fonction de Bessel d'ordre un <em>J</em><sub>1</sub>(<em>x</em>).
+          Au plan focal, un capteur à pixels carrés de côté <em>p</em> [m] définit l'échelle angulaire par pixel :
+        </p>
+
+        <div class="equation">
+          <span>s = p / F &nbsp;[rad·px⁻¹] = 206264.806 · (p / F) &nbsp;[arcsec·px⁻¹]</span>
+          <span class="eq-num">(2)</span>
+        </div>
+
+        <h3 class="lang-en">2.1. The Dual-Verdict Sampling Paradox</h3>
+        <h3 class="lang-fr">2.1. Le Paradoxe du Double Verdict d'Échantillonnage</h3>
+
+        <p class="lang-en">
+          In Fourier optics, the optical transfer function (OTF) of an aberration-free circular pupil vanishes beyond the spatial cutoff frequency <em>f</em><sub>c</sub> = <em>D</em> / λ [cycles/rad].
+          By the Nyquist-Shannon sampling theorem, the critical sampling interval is Δθ<sub>c</sub> = 1 / (2<em>f</em><sub>c</sub>) = λ / (2<em>D</em>).
+          The diffraction sampling ratio is:
+        </p>
+        <p class="lang-fr">
+          En optique de Fourier, la fonction de transfert optique (OTF) d'une pupille circulaire sans aberration s'annule au-delà de la fréquence spatiale de coupure <em>f</em><sub>c</sub> = <em>D</em> / λ [cycles/rad].
+          Selon le théorème d'échantillonnage de Nyquist-Shannon, le pas d'échantillonnage critique vaut Δθ<sub>c</sub> = 1 / (2<em>f</em><sub>c</sub>) = λ / (2<em>D</em>).
+          Le ratio d'échantillonnage de diffraction s'écrit :
+        </p>
+
+        <div class="equation">
+          <span>SR_diff = Δθ_c / s = (λ · F) / (2 · D · p) = (λ · N) / (2 · p)</span>
+          <span class="eq-num">(3)</span>
+        </div>
+
+        <p class="lang-en">
+          At ground level, atmospheric Kolmogorov turbulence broadens the incident point spread function (PSF) to an atmospheric seeing θ<sub>seeing</sub> [rad]. 
+          The effective combined Full Width at Half Maximum (FWHM<sub>eff</sub>) is governed by quadratic convolution:
+        </p>
+        <p class="lang-fr">
+          Au sol, la turbulence atmosphérique de Kolmogorov élargit la réponse percussionnelle (PSF) à une largeur de seeing θ<sub>seeing</sub> [rad].
+          La largeur à mi-hauteur effective composite (FWHM<sub>eff</sub>) est régie par la somme quadratique :
+        </p>
+
+        <div class="equation">
+          <span>FWHM_eff = √( θ_seeing² + (λ / D)² ) &nbsp;[rad]</span>
+          <span class="eq-num">(4)</span>
+        </div>
+
+        <p class="lang-en">
+          This yields the <em>realized sampling ratio</em>: SR<sub>realized</sub> = FWHM<sub>eff</sub> / (2<em>s</em>).
+          Evaluating both criteria reveals a frequent physical paradox in amateur astronomy. 
+          For example, a Newtonian reflector (<em>D</em> = 0.20 m, <em>F</em> = 1.0 m) coupled with a <em>p</em> = 3.76 µm sensor yields <em>s</em> = 0.776″/px.
+          In pure diffraction (λ = 550 nm), Δθ<sub>c</sub> = 0.284″, giving SR<sub>diff</sub> = 0.366 (<span class="chip chip-warn">UNDERSAMPLED</span>).
+          Yet under a typical seeing of 2.5″, FWHM<sub>eff</sub> = 2.564″, giving SR<sub>realized</sub> = 1.65 (<span class="chip chip-primary">OVERSAMPLED</span>).
+          Reporting both verdicts prevents the common error of inserting Barlow lenses to "fix" diffraction undersampling, which catastrophically dilutes photon flux per pixel while delivering zero true resolution gain.
+        </p>
+        <p class="lang-fr">
+          Il en découle le <em>ratio d'échantillonnage réalisé</em> : SR<sub>realized</sub> = FWHM<sub>eff</sub> / (2<em>s</em>).
+          L'évaluation simultanée des deux grandeurs met en évidence un paradoxe instrumental fréquent.
+          Par exemple, un télescope de Newton (<em>D</em> = 0,20 m, <em>F</em> = 1,0 m) équipé d'un capteur à pixels de <em>p</em> = 3,76 µm présente une échelle de 0,776″/px.
+          En diffraction pure (λ = 550 nm), Δθ<sub>c</sub> = 0,284″, donnant SR<sub>diff</sub> = 0,366 (<span class="chip chip-warn">SOUS-ÉCHANTILLONNÉ</span>).
+          Pourtant, sous un seeing moyen de 2,5″, FWHM<sub>eff</sub> = 2,564″, soit SR<sub>realized</sub> = 1,65 (<span class="chip chip-primary">SUR-ÉCHANTILLONNÉ</span>).
+          Publier les deux verdicts évite d'ajouter une lentille de Barlow pour « corriger » un sous-échantillonnage de diffraction théorique, ce qui diluerait inutilement les photons par pixel sans apporter le moindre gain de résolution réel.
+        </p>
+
+        <!-- Section 3: Photometry and Noise Budget -->
+        <h2 class="lang-en">3. Synthetic Photometry and Generalized Noise Budget</h2>
+        <h2 class="lang-fr">3. Photométrie Synthétique et Budget de Bruit Généralisé</h2>
+
+        <p class="lang-en">
+          The effective collecting area <em>A</em> incorporates central linear secondary obstruction ε = <em>d</em> / <em>D</em> ∈ [0, 1[:
+        </p>
+        <p class="lang-fr">
+          La surface collectrice effective <em>A</em> prend en compte l'obstruction centrale linéaire ε = <em>d</em> / <em>D</em> ∈ [0, 1[ :
+        </p>
+
+        <div class="equation">
+          <span>A = (π · D² / 4) · (1 − ε²) &nbsp;[m²]</span>
+          <span class="eq-num">(5)</span>
+        </div>
+
+        <p class="lang-en">
+          For an extraterrestrial target star of apparent catalog magnitude <em>m</em> observed through an atmospheric airmass <em>X</em> ≈ sec <em>z</em> with extinction coefficient <em>k</em> [mag/airmass], the detected electron rate is:
+        </p>
+        <p class="lang-fr">
+          Pour une étoile hors atmosphère de magnitude apparente <em>m</em> observée à travers une masse d'air <em>X</em> ≈ sec <em>z</em> avec un coefficient d'extinction <em>k</em> [mag/masse d'air], le débit d'électrons détecté vaut :
+        </p>
+
+        <div class="equation">
+          <span>R★ = F_0(λ) · 10^(−0.4·(m + k·X)) · A · Δλ · η · QE &nbsp;[e⁻·s⁻¹]</span>
+          <span class="eq-num">(6)</span>
+        </div>
+
+        <p class="lang-en">
+          where <em>F</em><sub>0</sub>(λ) is the calibrated zero-point spectral photon flux density (Bessell 1990), Δλ is the passband width [m], η is overall optical transmittance, and QE is detector quantum efficiency.
+          The diffuse sky background of observed surface brightness µ [mag·arcsec⁻²] generates an electron rate per pixel:
+        </p>
+        <p class="lang-fr">
+          où <em>F</em><sub>0</sub>(λ) est le point zéro de densité spectrale de flux de photons (Bessell 1990), Δλ la largeur de bande [m], η la transmission optique et QE le rendement quantique.
+          Le fond de ciel diffus de brillance de surface observée µ [mag·arcsec⁻²] engendre un débit d'électrons par pixel :
+        </p>
+
+        <div class="equation">
+          <span>R_sky = F_0(λ) · 10^(−0.4·μ) · A · Δλ · η · QE · s² &nbsp;[e⁻·s⁻¹·px⁻¹]</span>
+          <span class="eq-num">(7)</span>
+        </div>
+
+        <h3 class="lang-en">3.1. Composite PSF Enclosed Energy and Synthetic Aperture</h3>
+        <h3 class="lang-fr">3.1. Énergie Encadrée Composite et Ouverture Photométrique</h3>
+
+        <p class="lang-en">
+          For a synthetic circular photometric aperture of radius <em>r</em> = <em>k</em> · FWHM<sub>eff</sub>, the number of contained pixels is <em>n</em><sub>pix</sub> = π · (<em>r</em> / <em>s</em>)².
+          The fraction of star flux captured within the aperture is evaluated by regime-weighted interpolation:
+        </p>
+        <p class="lang-fr">
+          Pour une ouverture photométrique circulaire synthétique de rayon <em>r</em> = <em>k</em> · FWHM<sub>eff</sub>, le nombre de pixels inclus est <em>n</em><sub>pix</sub> = π · (<em>r</em> / <em>s</em>)².
+          La fraction du flux stellaire collectée dans l'ouverture est calculée par interpolation de régimes pondérée :
+        </p>
+
+        <div class="equation">
+          <span>E(k) = w · E_gauss(k) + (1 − w) · E_airy(v)</span>
+          <span class="eq-num">(8)</span>
+        </div>
+
+        <p class="lang-en">
+          where the Kolmogorov turbulence weight is <em>w</em> = θ<sub>seeing</sub>² / FWHM<sub>eff</sub>², <em>v</em> = π · <em>k</em> · FWHM<sub>eff</sub> / (λ / <em>D</em>), <em>E</em><sub>gauss</sub>(<em>k</em>) = 1 − exp(−<em>k</em>² · 2.3548² / 2), and <em>E</em><sub>airy</sub>(<em>v</em>) = 1 − <em>J</em><sub>0</sub>²(<em>v</em>) − <em>J</em><sub>1</sub>²(<em>v</em>).
+          When <em>k</em> ≥ 1.0, this closed-form formulation matches exact two-dimensional numerical convolution within 0.2%, while requiring zero numerical quadratures.
+        </p>
+        <p class="lang-fr">
+          où le poids de turbulence de Kolmogorov vaut <em>w</em> = θ<sub>seeing</sub>² / FWHM<sub>eff</sub>², <em>v</em> = π · <em>k</em> · FWHM<sub>eff</sub> / (λ / <em>D</em>), <em>E</em><sub>gauss</sub>(<em>k</em>) = 1 − exp(−<em>k</em>² · 2,3548² / 2), et <em>E</em><sub>airy</sub>(<em>v</em>) = 1 − <em>J</em><sub>0</sub>²(<em>v</em>) − <em>J</em><sub>1</sub>²(<em>v</em>).
+          Dès que <em>k</em> ≥ 1,0, cette formulation analytique concorde à moins de 0,2 % avec une convolution numérique 2D complète, sans nécessiter la moindre quadrature coûteuse.
+        </p>
+
+        <h3 class="lang-en">3.2. Saturation and Equivalent Area Additivity</h3>
+        <h3 class="lang-fr">3.2. Saturation et Additivité des Aires Équivalentes</h3>
+
+        <p class="lang-en">
+          To guard against full-well blooming, the peak pixel count on a single sub-exposure of duration <em>t</em> [s] is evaluated. 
+          Under convolution of two central profiles, equivalent areas Ω<sub>eq</sub> = 1 / <em>I</em>(0) add linearly:
+        </p>
+        <p class="lang-fr">
+          Pour prévenir l'éblouissement par débordement de puits, le pic d'électrons sur une sous-pose unique de durée <em>t</em> [s] est calculé.
+          Lors de la convolution de profils centrés, les aires équivalentes Ω<sub>eq</sub> = 1 / <em>I</em>(0) s'additionnent :
+        </p>
+
+        <div class="equation">
+          <span>Ω_pic = 2π · (θ_seeing / 2.3548)² + (4 / π) · (λ / D)² &nbsp;[sr]</span>
+          <span class="eq-num">(9)</span>
+        </div>
+
+        <p class="lang-en">
+          giving central pixel intensity <em>I</em>(0) = 1 / Ω<sub>pic</sub> and central pixel fraction <em>f</em> = <em>I</em>(0) · <em>s</em>².
+          Peak electrons per sub-exposure are Peak = <em>R</em><sub>★</sub> · <em>t</em> · <em>f</em> + (<em>R</em><sub>sky</sub> + <em>D</em>) · <em>t</em>, triggering a warning whenever Peak ≥ FullWell.
+        </p>
+        <p class="lang-fr">
+          donnant l'intensité centrale <em>I</em>(0) = 1 / Ω<sub>pic</sub> et la fraction du pixel central <em>f</em> = <em>I</em>(0) · <em>s</em>².
+          Le pic d'électrons par sous-pose s'écrit Peak = <em>R</em><sub>★</sub> · <em>t</em> · <em>f</em> + (<em>R</em><sub>sky</sub> + <em>D</em>) · <em>t</em>, déclenchant une alerte dès que Peak ≥ FullWell.
+        </p>
+
+        <h3 class="lang-en">3.3. Complete CCD Equation and Regimes</h3>
+        <h3 class="lang-fr">3.3. Équation CCD Complète et Régimes</h3>
+
+        <p class="lang-en">
+          For <em>N</em> sub-exposures of duration <em>t</em> (total time <em>T</em> = <em>N</em> · <em>t</em>), detector readout noise <em>R</em> [e⁻ rms], dark current <em>D</em> [e⁻/s/px], and Young–Dravins atmospheric scintillation variance σ²<sub>scint</sub> = <em>N</em> · (<em>s</em> · <em>R</em><sub>★</sub> · <em>t</em>)² with relative amplitude <em>s</em> = 0.09 · <em>D</em><sub>cm</sub><sup>−2/3</sup> · <em>X</em><sup>1.75</sup> · exp(−<em>h</em>/8000) · (2<em>t</em>)<sup>−1/2</sup>, the total noise variance is:
+        </p>
+        <p class="lang-fr">
+          Pour <em>N</em> sous-poses de durée <em>t</em> (temps total <em>T</em> = <em>N</em> · <em>t</em>), un bruit de lecture <em>R</em> [e⁻ rms], un courant d'obscurité <em>D</em> [e⁻/s/px] et une variance de scintillation de Young–Dravins σ²<sub>scint</sub> = <em>N</em> · (<em>s</em> · <em>R</em><sub>★</sub> · <em>t</em>)² d'amplitude relative <em>s</em> = 0,09 · <em>D</em><sub>cm</sub><sup>−2/3</sup> · <em>X</em><sup>1,75</sup> · exp(−<em>h</em>/8000) · (2<em>t</em>)<sup>−1/2</sup>, la variance totale s'écrit :
+        </p>
+
+        <div class="equation">
+          <span>σ²_total = S + n_pix · R_sky · T + n_pix · D · T + N · n_pix · R² + σ²_scint</span>
+          <span class="eq-num">(10)</span>
+        </div>
+
+        <p class="lang-en">
+          with accumulated signal <em>S</em> = <em>R</em><sub>★</sub> · <em>T</em> · <em>E</em>(<em>k</em>) and SNR = <em>S</em> / σ<sub>total</sub>.
+          Comparing individual variances immediately identifies the dominant physical limiter among five distinct regimes:
+          <span class="chip chip-ok">SHOT_LIMITED</span>, <span class="chip chip-primary">SKY_LIMITED</span>, <span class="chip chip-warn">DARK_LIMITED</span>, <span class="chip chip-tertiary">READ_LIMITED</span>, or <span class="chip chip-error">SCINTILLATION_LIMITED</span>.
+        </p>
+        <p class="lang-fr">
+          avec un signal accumulé <em>S</em> = <em>R</em><sub>★</sub> · <em>T</em> · <em>E</em>(<em>k</em>) et S/B = <em>S</em> / σ<sub>total</sub>.
+          La comparaison des variances terme à terme identifie sans ambiguïté le facteur limitant parmi cinq régimes distincts :
+          <span class="chip chip-ok">SHOT_LIMITED</span>, <span class="chip chip-primary">SKY_LIMITED</span>, <span class="chip chip-warn">DARK_LIMITED</span>, <span class="chip chip-tertiary">READ_LIMITED</span> ou <span class="chip chip-error">SCINTILLATION_LIMITED</span>.
+        </p>
+
+        <!-- Section 4: Calibration -->
+        <h2 class="lang-en">4. Calibration Pipeline and the Calibration Floor Theorem</h2>
+        <h2 class="lang-fr">4. Pipeline de Calibration et Théorème du Plancher Systématique</h2>
+
+        <p class="lang-en">
+          Standard CCD/CMOS image calibration removes additive bias and thermal signatures and divides by normalized flat-field response Flat̂(<em>x</em>, <em>y</em>):
+        </p>
+        <p class="lang-fr">
+          La réduction standard des images astronomiques soustrait l'offset et l'obscurité thermique puis divise par le flat normalisé Flat̂(<em>x</em>, <em>y</em>) :
+        </p>
+
+        <div class="equation">
+          <span>Calibrated(x,y) = [ Light(x,y) − MasterDark(x,y) ] / [ (Flat − Bias) / ⟨Flat − Bias⟩ ]</span>
+          <span class="eq-num">(11)</span>
+        </div>
+
+        <h3 class="lang-en">4.1. The Calibration Floor Theorem</h3>
+        <h3 class="lang-fr">4.1. Le Théorème du Plancher de Calibration</h3>
+
+        <p class="lang-en">
+          A critical misconception in astrophotography is assuming that calibration noise decreases with science exposure stacking.
+          Because the <em>same</em> master dark and master flat are applied to all <em>N</em><sub>poses</sub> science frames, their residual noise is perfectly correlated across the stack.
+          By propagation of errors, the calibrated pixel variance in the stack is:
+        </p>
+        <p class="lang-fr">
+          Une erreur d'appréciation fréquente consiste à croire que le bruit des calibrations s'atténue lors de l'empilement des poses de science.
+          Le <em>même</em> master dark et le même master flat étant soustraits et divisés sur l'ensemble des <em>N</em><sub>poses</sub> poses brutes, leur bruit résiduel est parfaitement corrélé.
+          Par propagation des incertitudes, la variance par pixel de l'image calibrée empilée vaut :
+        </p>
+
+        <div class="equation">
+          <span>σ²_cal = (σ_light / √N_poses)² + σ²_master_dark + (Signal · σ_flat_rel)²</span>
+          <span class="eq-num">(12)</span>
+        </div>
+
+        <p class="lang-en">
+          As <em>N</em><sub>poses</sub> → ∞, the first term tends to zero, leaving the irreducible <strong>Calibration Floor</strong>:
+          σ<sub>floor</sub> = √(σ²<sub>master_dark</sub> + (Signal · σ<sub>flat_rel</sub>)²).
+          Consequently, to prevent master calibration noise from exceeding a fraction <em>f</em> (typically <em>f</em> = 0.3) of the stacked science noise, the required calibration count <em>N</em><sub>calib</sub> must grow <strong>linearly</strong> with the science stack size:
+        </p>
+        <p class="lang-fr">
+          Lorsque <em>N</em><sub>poses</sub> → ∞, le premier terme s'annule, laissant le <strong>Plancher de Calibration</strong> irréductible :
+          σ<sub>floor</sub> = √(σ²<sub>master_dark</sub> + (Signal · σ<sub>flat_rel</sub>)²).
+          Par conséquent, pour empêcher le bruit des masters de dépasser une fraction <em>f</em> (typiquement <em>f</em> = 0,3) du bruit de science empilé, le nombre de poses de calibration <em>N</em><sub>calib</sub> doit croître <strong>linéairement</strong> avec la taille de l'empilement :
+        </p>
+
+        <div class="equation">
+          <span>N_calib ≥ N_poses · [ σ_single / (f · σ_ref) ]²</span>
+          <span class="eq-num">(13)</span>
+        </div>
+
+        <!-- Section 5: Verification & Results -->
+        <h2 class="lang-en">5. Numerical Parity and Observational Case Studies</h2>
+        <h2 class="lang-fr">5. Parité Numérique et Cas d'Étude Observationnels</h2>
+
+        <p class="lang-en">
+          The mathematical engine was rigorously verified across 36 comprehensive observational scenarios.
+          A cross-platform reference dataset produced by the companion Kotlin/Android codebase exported 1,531 double-precision floating-point values.
+          Comparison against the Python engine demonstrated that 1,529 quantities match at exact bit-level equality (zero difference in binary representation), with the remaining 2 quantities differing by only 1 unit in the last place (1 ULP) due to CPU hardware summation ordering.
+        </p>
+        <p class="lang-fr">
+          Le moteur mathématique a été rigoureusement validé sur 36 scénarios observationnels exhaustifs.
+          Une base de référence croisée générée par le code source Kotlin/Android a exporté 1 531 grandeurs en virgule flottante double précision.
+          La comparaison avec le moteur Python a démontré que 1 529 grandeurs sont rigoureusement identiques au bit près (zéro différence de représentation binaire), les 2 grandeurs restantes ne différant que d'une seule unité sur le dernier bit (1 ULP) en raison de l'ordre d'addition matérielle du processeur.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th class="lang-en">Instrument Benchmark</th>
+              <th class="lang-fr">Banc d'Essai Instrumental</th>
+              <th class="lang-en">Optical &amp; Detector Configuration</th>
+              <th class="lang-fr">Configuration Optique &amp; Détecteur</th>
+              <th class="lang-en">Key Computed Diagnostic</th>
+              <th class="lang-fr">Diagnostic Clé Calculé</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DWARF 3 Smart Telescope</strong></td>
+              <td>D = 35 mm, F = 150 mm (f/4.3), p = 2.0 µm, uncooled</td>
+              <td class="lang-en">Diffraction: 1.18 px/res el (Under). Realized: 1.5 px/FWHM (Under). D = 0.5 e⁻/s imposes Dark-Limited regime. Optimal calibration stack: 343 frames.</td>
+              <td class="lang-fr">Diffraction : 1,18 px/él (Sous). Réalisé : 1,5 px/FWHM (Sous). D = 0,5 e⁻/s impose le régime Dark-Limited. Poses de calibration conseillées : 343.</td>
+            </tr>
+            <tr>
+              <td><strong>Newtonian Reflector 200/1000</strong></td>
+              <td>D = 200 mm, F = 1000 mm (f/5.0), p = 3.76 µm, cooled</td>
+              <td class="lang-en">Diffraction: 0.73 px/res el (Under). Realized (seeing 2.5″): 3.31 px/FWHM (Over!). Resolves dual-sampling paradox.</td>
+              <td class="lang-fr">Diffraction : 0,73 px/él (Sous). Réalisé (seeing 2,5″) : 3,31 px/FWHM (Sur !). Résout le paradoxe du double verdict.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Section 6: Conclusions -->
+        <h2 class="lang-en">6. Conclusions &amp; Code Availability</h2>
+        <h2 class="lang-fr">6. Conclusions &amp; Disponibilité du Code</h2>
+
+        <p class="lang-en">
+          PhotonPath provides astronomers with a unified, offline, open-source dimensioning suite rooted in strict physical optics and statistics.
+          By reconciling the diffraction and seeing regimes, providing explicit noise regime diagnostics, and demonstrating the linear scaling of calibration floor noise, it elevates observing planning from heuristic trial-and-error to rigorous physical modeling.
+          The source code, standalone desktop executables, test suites, and documentation are completely free of tracking, telemetry, and proprietary licensing barriers.
+        </p>
+        <p class="lang-fr">
+          PhotonPath offre aux astronomes une suite de dimensionnement unifiée, hors-ligne et libre, fondée sur l'optique ondulatoire et la statistique physique.
+          En réconciliant diffraction et turbulence, en fournissant un diagnostic explicite du régime de bruit limitant et en démontrant la croissance linéaire du plancher de calibration, le logiciel hisse la préparation des observations au niveau d'une modélisation rigoureuse.
+          Le code source, les exécutables autonomes, la suite de tests et la documentation sont totalement exempts de télémétrie, de traceurs et d'entraves propriétaires.
+        </p>
+
+        <!-- References -->
+        <h2 class="lang-en">References</h2>
+        <h2 class="lang-fr">Références Bibliographiques</h2>
+
+        <ul class="reference-list">
+          <li><strong>Abramowitz, M., &amp; Stegun, I. A.</strong> 1964, <em>Handbook of Mathematical Functions</em>, National Bureau of Standards, Applied Mathematics Series 55, §9.4.</li>
+          <li><strong>Bessell, M. S.</strong> 1990, <em>UBVRI passbands</em>, Publications of the Astronomical Society of the Pacific (PASP), 102, 1181.</li>
+          <li><strong>Dravins, D., Lindegren, L., Mezey, E., &amp; Young, A. T.</strong> 1998, <em>Atmospheric Scintillation and Photometric Accuracy</em>, PASP, 110, 610.</li>
+          <li><strong>Howell, S. B.</strong> 2006, <em>Handbook of CCD Astronomy</em>, 2nd edn., Cambridge University Press.</li>
+          <li><strong>Léna, P., Rouan, D., Lebrun, F., Mignard, F., &amp; Pelat, D.</strong> 2008, <em>L'Observation en Astrophysique</em>, 3rd edn., EDP Sciences / CNRS Éditions.</li>
+          <li><strong>Merline, W. J., &amp; Howell, S. B.</strong> 1995, <em>A CCD Photometry Program for Small Telescopes</em>, Experimental Astronomy, 6, 163.</li>
+          <li><strong>Pérez, J.-P.</strong> 2011, <em>Optique : Fondements et applications</em>, 7th edn., Dunod.</li>
+          <li><strong>Young, A. T.</strong> 1967, <em>Photometric Error Analysis. VI. Confirmation of Reiger's Theory of Scintillation</em>, The Astronomical Journal, 72, 747.</li>
+        </ul>
+      </section>
+
+      <!-- Section: FAQ -->
+      <section id="faq">
+        <h2 class="lang-en">Frequently Asked Questions</h2>
+        <h2 class="lang-fr">Questions Fréquentes</h2>
+
+        <h3 class="lang-en">Why do calibration requirements scale with science frame count?</h3>
+        <h3 class="lang-fr">Pourquoi le besoin en calibration croît-il avec le nombre de poses de science ?</h3>
+        <p class="lang-en">
+          The master dark is subtracted from every science sub-exposure. Its noise variance is static across the stack.
+          When stacking 100 science frames, science noise drops by √100 = 10, but master dark noise does not diminish at all!
+          If you do not increase calibration frame count, the master dark becomes the dominant noise source of your final image.
+        </p>
+        <p class="lang-fr">
+          Le master dark est soustrait de chacune des sous-poses. Sa variance de bruit est figée sur tout l'empilement.
+          En empilant 100 poses de science, le bruit des poses brutes est divisé par √100 = 10, mais le bruit du master dark ne diminue pas d'un cheveu !
+          Sans augmentation du nombre de darks, le master dark devient le bruit dominant de votre image finale.
+        </p>
+
+        <h3 class="lang-en">Are numerical calculations identical between Python and Android?</h3>
+        <h3 class="lang-fr">Les calculs sont-ils identiques entre Python et Android ?</h3>
+        <p class="lang-en">
+          Yes. A dedicated golden parity test suite validates 1,531 double-precision floating-point values across 36 scenarios:
+          1,529 match at the exact bit level (0 ULP difference), and the remaining 2 match within 1 ULP (due to hardware summation ordering).
+        </p>
+        <p class="lang-fr">
+          Oui. Une suite de tests de parité valide 1 531 variables en virgule flottante double précision sur 36 scénarios :
+          1 529 sont identiques au bit près (0 ULP d'écart), et les 2 dernières à 1 ULP près (ordre d'addition matérielle).
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="lang-en">PhotonPath · Open Astronomical Modeling & Dimensioning · 100% Offline & Open Science</div>
+    <div class="lang-fr">PhotonPath · Modélisation & Dimensionnement Astronomique · 100 % Hors-ligne & Science Ouverte</div>
+  </footer>
+
+  <script>
+    // Language Toggle Script (Pure Offline, No Network, Default EN)
+    (function() {
+      var currentLang = 'en';
+      var btnEn = document.getElementById('btnEn');
+      var btnFr = document.getElementById('btnFr');
+      var langToggle = document.getElementById('langToggle');
+
+      function setLang(lang) {
+        currentLang = lang;
+        document.documentElement.setAttribute('lang', lang);
+        if (lang === 'en') {
+          btnEn.classList.add('active');
+          btnFr.classList.remove('active');
+        } else {
+          btnFr.classList.add('active');
+          btnEn.classList.remove('active');
+        }
+        try {
+          localStorage.setItem('photonpath_lang', lang);
+        } catch(e) {}
+      }
+
+      // Check stored preference or default to English
+      try {
+        var saved = localStorage.getItem('photonpath_lang');
+        if (saved === 'fr') {
+          setLang('fr');
+        } else {
+          setLang('en');
+        }
+      } catch(e) {
+        setLang('en');
+      }
+
+      langToggle.addEventListener('click', function() {
+        setLang(currentLang === 'en' ? 'fr' : 'en');
+      });
+
+      // Sidebar Active Link Highlight & Smooth Scroll Navigation
+      var navLinks = document.querySelectorAll('.sidebar-menu a');
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var targetId = this.getAttribute('href');
+          if (targetId && targetId.startsWith('#')) {
+            var targetElem = document.querySelector(targetId);
+            if (targetElem) {
+              e.preventDefault();
+              targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              navLinks.forEach(function(l) { l.classList.remove('active'); });
+              document.querySelectorAll('.sidebar-menu a[href="' + targetId + '"]').forEach(function(l) {
+                l.classList.add('active');
+              });
+            }
+          }
+        });
+      });
+
+      // ScrollSpy Observer
+      if ('IntersectionObserver' in window) {
+        var sections = document.querySelectorAll('main section[id]');
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var id = entry.target.getAttribute('id');
+              navLinks.forEach(function(l) { l.classList.remove('active'); });
+              document.querySelectorAll('.sidebar-menu a[href="#' + id + '"]').forEach(function(l) {
+                l.classList.add('active');
+              });
+            }
+          });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+
+        sections.forEach(function(sec) { observer.observe(sec); });
+      }
+    })();
+  </script>
+</body>
+</html>
