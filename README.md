@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Documentation](https://img.shields.io/badge/Documentation-GitHub%20Pages-00FFB2.svg)](https://kundaastratta.github.io/PhotonPath-App/)
 [![Scientific Paper](https://img.shields.io/badge/Scientific%20Paper-PASP%2FA%26A-7B61FF.svg)](https://kundaastratta.github.io/PhotonPath-App/article.html)
+[![Donate with PayPal](https://img.shields.io/badge/Donate-PayPal-00457C.svg?logo=paypal&logoColor=white)](https://paypal.me/KundaAstratta?locale.x=fr_FR&country.x=FR)
 
 **Observational Astronomy Optical-to-Detector Modeling & Dimensioning Framework — "From Photon to Pixel".**
 
@@ -87,6 +88,16 @@ photonpath --lang fr  # French interface
 - **100% Offline & Private:** Zero internet connection required, zero telemetry, zero analytics, zero external web requests.
 - **Strict SI Units:** All domain physics compute in pure SI units (meters, seconds, radians, Joules) before presentation conversions.
 - **Cross-Platform Numerical Parity:** Validated against double-precision reference benchmarks with zero NaN tolerance.
+
+---
+
+## 💖 Support the Project
+
+PhotonPath is an independent, 100% offline, and open-source project provided free of charge with zero advertising, telemetry, or commercial tracking.
+
+If PhotonPath is valuable to your astronomical observations, astrophotography planning, or scientific work, voluntary contributions to support ongoing development, physical modeling, and maintenance are warmly appreciated:
+
+👉 **[Support PhotonPath via PayPal](https://paypal.me/KundaAstratta?locale.x=fr_FR&country.x=FR)**
 
 ---
 
