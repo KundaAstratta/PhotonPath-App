@@ -26,7 +26,7 @@ Pre-built standalone packages requiring zero programming setup:
 
 | Platform | Package | Architecture | Description |
 | :--- | :--- | :--- | :--- |
-| **macOS** | [**PhotonPath-macOS.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-macOS.zip) | Apple Silicon & Intel (13+) | Standalone `PhotonPath.app` bundle |
+| **macOS** | [**PhotonPath-macOS.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-macOS.zip) | Apple Silicon (macOS 13+) | Standalone `PhotonPath.app` bundle |
 | **Windows** | [**PhotonPath-Windows.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-Windows.zip) | 64-bit (Win 10/11) | Portable edition, double-click `lancer_photonpath.bat` |
 | **Linux** | [**PhotonPath-Linux.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-Linux.zip) | x86_64 glibc | Native binary with desktop launch script |
 | **Python** | [**photonpath-0.1.0-py3-none-any.whl**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/photonpath-0.1.0-py3-none-any.whl) | Pure Python ≥ 3.14 | Install via `pip install ".[gui]"` |
@@ -58,7 +58,9 @@ Simulates the reduction pipeline $(\text{Light} - \text{Dark}) / \text{Flat}$ wi
 ### macOS
 1. Download [**PhotonPath-macOS.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-macOS.zip).
 2. Extract and move `PhotonPath.app` to your `/Applications` folder.
-3. On first launch, right-click `PhotonPath.app` → **Open** → confirm **Open**.
+3. On first launch, double-click `PhotonPath.app` and dismiss the warning, then open
+   **System Settings → Privacy & Security** and click **Open Anyway**.
+   On macOS 14 and earlier, right-click `PhotonPath.app` → **Open** is enough.
 
 ### Windows
 1. Download [**PhotonPath-Windows.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-Windows.zip).
