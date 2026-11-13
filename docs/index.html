@@ -737,13 +737,23 @@
 
             <h4 class="lang-en" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">2. Launching</h4>
             <h4 class="lang-fr" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">2. Lancement</h4>
-            <p class="lang-en">Execute <code class="chip chip-tertiary">./lancer_photonpath.sh</code> from the terminal or your desktop file manager.</p>
-            <p class="lang-fr">Exécutez <code class="chip chip-tertiary">./lancer_photonpath.sh</code> depuis le terminal ou votre gestionnaire de fichiers.</p>
+            <p class="lang-en">Execute <code class="chip chip-tertiary">./lancer_photonpath.sh</code> from the terminal or your desktop file manager. No Python installation is needed.</p>
+            <p class="lang-fr">Exécutez <code class="chip chip-tertiary">./lancer_photonpath.sh</code> depuis le terminal ou votre gestionnaire de fichiers. Aucune installation de Python n'est nécessaire.</p>
+
+            <h4 class="lang-en" style="color:var(--accent-ok);margin:10px 0 4px 0;font-size:13px;">3. Applications menu (optional)</h4>
+            <h4 class="lang-fr" style="color:var(--accent-ok);margin:10px 0 4px 0;font-size:13px;">3. Menu des applications (facultatif)</h4>
+            <p class="lang-en">Add PhotonPath to your desktop's applications menu (run it again if you move the folder):</p>
+            <p class="lang-fr">Ajoutez PhotonPath au menu des applications de votre bureau (à relancer si vous déplacez le dossier) :</p>
+            <pre style="margin:6px 0;padding:8px;"><code>./ajouter_au_menu.sh</code></pre>
 
             <h4 class="lang-en" style="color:var(--text-muted);margin:10px 0 4px 0;font-size:13px;">System Libraries</h4>
             <h4 class="lang-fr" style="color:var(--text-muted);margin:10px 0 4px 0;font-size:13px;">Bibliothèques Système</h4>
-            <p class="lang-en" style="font-size:12px;color:var(--text-dim);">Requires standard Qt/X11 libraries: <code>libxcb</code>, <code>libxkbcommon</code>, <code>libgl1</code>.</p>
-            <p class="lang-fr" style="font-size:12px;color:var(--text-dim);">Nécessite les bibliothèques Qt/X11 standard : <code>libxcb</code>, <code>libxkbcommon</code>, <code>libgl1</code>.</p>
+            <p class="lang-en" style="font-size:12px;color:var(--text-dim);">Qt needs a few libraries, already present on most desktops. On Ubuntu / Debian (Fedora and Arch: see <code>TUTORIEL_INSTALLATION_LINUX.txt</code> in the package):</p>
+            <p class="lang-fr" style="font-size:12px;color:var(--text-dim);">Qt a besoin de quelques bibliothèques, déjà présentes sur la plupart des bureaux. Sous Ubuntu / Debian (Fedora et Arch : voir <code>TUTORIEL_INSTALLATION_LINUX.txt</code> dans le paquet) :</p>
+            <pre style="margin:6px 0;padding:8px;font-size:11px;"><code>sudo apt install libegl1 libgl1 libxkbcommon0 libxkbcommon-x11-0 \
+  libfontconfig1 libdbus-1-3 libxcb-cursor0</code></pre>
+            <p class="lang-en" style="font-size:12px;color:var(--text-dim);"><code>libxcb-cursor0</code> is the one most often missing: without it, Qt cannot open a window under X11.</p>
+            <p class="lang-fr" style="font-size:12px;color:var(--text-dim);"><code>libxcb-cursor0</code> est la plus souvent absente : sans elle, Qt ne peut pas ouvrir de fenêtre sous X11.</p>
           </div>
         </div>
 

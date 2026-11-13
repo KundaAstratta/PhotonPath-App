@@ -70,11 +70,25 @@ Simulates the reduction pipeline $(\text{Light} - \text{Dark}) / \text{Flat}$ wi
 ### Linux
 1. Download [**PhotonPath-Linux.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-Linux.zip).
 2. Extract the archive.
-3. Open a terminal and run:
+3. Open a terminal in the extracted folder and run:
    ```bash
    chmod +x lancer_photonpath.sh
    ./lancer_photonpath.sh
    ```
+   No Python installation is needed.
+4. Optional: add PhotonPath to your applications menu with `./ajouter_au_menu.sh`
+   (run it again if you move the folder).
+
+Qt needs a few system libraries, already present on most desktops. If the app does
+not start, install them (Ubuntu / Debian; Fedora and Arch: see
+`TUTORIEL_INSTALLATION_LINUX.txt` in the package):
+
+```bash
+sudo apt install libegl1 libgl1 libxkbcommon0 libxkbcommon-x11-0 \
+  libfontconfig1 libdbus-1-3 libxcb-cursor0
+```
+
+`libxcb-cursor0` is the one most often missing: without it, Qt cannot open a window under X11.
 
 ### Python Wheel (Universal)
 ```bash
