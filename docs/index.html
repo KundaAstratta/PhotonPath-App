@@ -677,8 +677,8 @@
           <!-- macOS Card -->
           <div class="card">
             <div class="card-title"><span class="chip chip-primary">macOS</span> Application Bundle</div>
-            <p class="lang-en">For macOS 13+ on Apple Silicon (M1 and later). Self-contained <code>.app</code> bundle.</p>
-            <p class="lang-fr">Pour macOS 13+ sur Mac Apple Silicon (M1 et suivants). Paquet autonome <code>.app</code>.</p>
+            <p class="lang-en">For macOS 15 or later on Apple Silicon (M1 and later). Self-contained <code>.app</code> bundle.</p>
+            <p class="lang-fr">Pour macOS 15 ou plus récent sur Mac Apple Silicon (M1 et suivants). Paquet autonome <code>.app</code>.</p>
             
             <h4 class="lang-en" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">1. Installation</h4>
             <h4 class="lang-fr" style="color:var(--accent-primary);margin:10px 0 4px 0;font-size:13px;">1. Installation</h4>
@@ -768,12 +768,13 @@
             PhotonPath est également disponible sous forme de wheel pure Python (<code>photonpath-0.1.0-py3-none-any.whl</code>). 
             Installez et exécutez sur tout système supportant Python ≥ 3.14 :
           </p>
-          <pre><code># Install standalone wheel with GUI dependencies
-pip install photonpath-0.1.0-py3-none-any.whl[gui]
+          <pre><code># Install the wheel with its GUI dependencies (keep the quotes: zsh would expand [gui])
+pip install "photonpath-0.1.0-py3-none-any.whl[gui]"
 
-# Or install in isolated virtual environment with uv:
+# Or in an isolated virtual environment with uv:
 uv venv --python 3.14 .venv
-uv pip install ".[gui]"
+uv pip install "photonpath-0.1.0-py3-none-any.whl[gui]"
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 
 # Launch with English interface (default):
 photonpath

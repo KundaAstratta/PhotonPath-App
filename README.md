@@ -26,7 +26,7 @@ Pre-built standalone packages requiring zero programming setup:
 
 | Platform | Package | Architecture | Description |
 | :--- | :--- | :--- | :--- |
-| **macOS** | [**PhotonPath-macOS.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-macOS.zip) | Apple Silicon (macOS 13+) | Standalone `PhotonPath.app` bundle |
+| **macOS** | [**PhotonPath-macOS.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-macOS.zip) | Apple Silicon (macOS 15+) | Standalone `PhotonPath.app` bundle |
 | **Windows** | [**PhotonPath-Windows.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-Windows.zip) | 64-bit (Win 10/11) | Portable edition, double-click `lancer_photonpath.bat` |
 | **Linux** | [**PhotonPath-Linux.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-Linux.zip) | x86_64 glibc | Native binary with desktop launch script |
 | **Python** | [**photonpath-0.1.0-py3-none-any.whl**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/photonpath-0.1.0-py3-none-any.whl) | Pure Python ≥ 3.14 | Install via `pip install ".[gui]"` |
@@ -65,7 +65,9 @@ Simulates the reduction pipeline $(\text{Light} - \text{Dark}) / \text{Flat}$ wi
 ### Windows
 1. Download [**PhotonPath-Windows.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-Windows.zip).
 2. Extract the archive.
-3. Double-click `lancer_photonpath.bat` (or `PhotonPath\PhotonPath.exe`).
+3. Double-click `lancer_photonpath.bat` (or `PhotonPath\PhotonPath.exe`). No Python installation is needed.
+4. If Windows SmartScreen shows "Windows protected your PC": click **More info** → **Run anyway**
+   (this appears for any free software that is not signed with a paid certificate).
 
 ### Linux
 1. Download [**PhotonPath-Linux.zip**](https://github.com/KundaAstratta/PhotonPath-App/releases/latest/download/PhotonPath-Linux.zip).
@@ -92,7 +94,7 @@ sudo apt install libegl1 libgl1 libxkbcommon0 libxkbcommon-x11-0 \
 
 ### Python Wheel (Universal)
 ```bash
-pip install photonpath-0.1.0-py3-none-any.whl[gui]
+pip install "photonpath-0.1.0-py3-none-any.whl[gui]"   # quotes: zsh would expand [gui]
 photonpath            # English interface (default)
 photonpath --lang fr  # French interface
 ```
